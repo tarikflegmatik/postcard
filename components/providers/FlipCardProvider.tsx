@@ -53,9 +53,9 @@ export const FlipCardWrapper = ({
 }>) => {
   const { isCardFlipped } = useFlipCardContext();
   return (
-    <div className={`[perspective:1000px] ${className}`}>
+    <div className={`perspective-distant ${className}`}>
       <div
-        className={`${isCardFlipped ? "[transform:rotateY(-180deg)]" : ""} relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]`}
+        className={`${isCardFlipped ? "-rotate-y-180" : ""} relative h-full w-full transition-transform duration-700 will-change-transform transform-3d`}
       >
         {children}
       </div>
@@ -75,7 +75,7 @@ export const FlipCardSide = ({
   const isBackSide = side === "back";
   return (
     <div
-      className={`absolute h-full w-full [backface-visibility:hidden] ${isBackSide ? "[transform:rotateY(180deg)]" : ""} ${className}}`}
+      className={`absolute h-full w-full backface-hidden ${isBackSide ? "[transform:rotateY(180deg)]" : ""} ${className}`}
     >
       {children}
     </div>
@@ -94,7 +94,10 @@ export const FlipCardButton = ({
   const { flipCard } = useFlipCardContext();
 
   return (
-    <button onClick={() => flipCard(side)} className={className}>
+    <button
+      onClick={() => flipCard(side)}
+      className={`backface-hidden ${className}`}
+    >
       {children}
     </button>
   );
