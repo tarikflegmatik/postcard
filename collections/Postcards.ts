@@ -33,7 +33,7 @@ export const Postcards: CollectionConfig = {
       required: true,
     },
     {
-      name: "pageHeader",
+      name: "pageContent",
       type: "group",
       fields: [
         {

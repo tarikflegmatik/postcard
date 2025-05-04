@@ -27,7 +27,7 @@ export const Invitations: CollectionConfig = {
       index: true,
     },
     {
-      name: "pageHeader",
+      name: "pageContent",
       type: "group",
       fields: [
         {
@@ -47,6 +47,55 @@ export const Invitations: CollectionConfig = {
         },
       ],
     },
+    {
+      name: "metadata",
+      type: "group",
+      label: "Page Metadata",
+      admin: {
+        description: "Used for SEO and social sharing.",
+      },
+      fields: [
+        {
+          name: "title",
+          type: "text",
+          label: "Meta Title",
+          required: false,
+          admin: {
+            placeholder: "Used as <title> tag and Open Graph title",
+          },
+        },
+        {
+          name: "description",
+          type: "textarea",
+          label: "Meta Description",
+          required: false,
+          admin: {
+            placeholder: "Used for SEO and social previews",
+          },
+          validate: (value) => {
+            if (value && value.length < 160) return true;
+            return "Meta description must be 160 characters or fewer.";
+          },
+        },
+        {
+          name: "image",
+          type: "upload",
+          label: "Social Share Image",
+          relationTo: "media",
+          required: false,
+        },
+        {
+          name: "noIndex",
+          type: "checkbox",
+          label: "Prevent Search Indexing",
+          defaultValue: false,
+          admin: {
+            description: "Adds <meta name='robots' content='noindex'>",
+          },
+        },
+      ],
+    },
+
     ...baseCardFields,
     {
       name: "registrations",

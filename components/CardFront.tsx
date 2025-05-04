@@ -14,7 +14,7 @@ const CardFront = ({ card }: { card: Postcard | Invitation }) => {
       <div
         className="absolute top-0 left-0 z-10 h-full w-full bg-[length:12px_12px] bg-repeat-space md:bg-[length:20px_20px]"
         style={{
-          backgroundImage: `url(${borderPattern.url})`,
+          backgroundImage: `url("${borderPattern.url}")`,
           backgroundPosition: "top left",
           backgroundRepeat: "space",
         }}

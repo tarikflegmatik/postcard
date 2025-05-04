@@ -11,7 +11,6 @@ type LexicalNode = {
 };
 
 const CardBack = ({ card }: { card: Postcard | Invitation }) => {
-  console.log(card);
   const messageTextCollection = (
     card.back.messageText.root.children as LexicalNode[]
   ).map((textBlock) => textBlock.children?.[0]?.text);
@@ -20,7 +19,7 @@ const CardBack = ({ card }: { card: Postcard | Invitation }) => {
     card.back.signatureText.root.children as LexicalNode[]
   ).map((textBlock) => textBlock.children?.[0]?.text);
 
-  const borderPattern = card.front.borderPattern as Media;
+  const borderPattern = card.back.borderPattern as Media;
   const postageStampImage = (card.back.postageStamp as Stamp).image as Media;
 
   return (
@@ -32,7 +31,7 @@ const CardBack = ({ card }: { card: Postcard | Invitation }) => {
       <div
         className="absolute top-0 left-0 z-10 h-full w-full bg-[length:12px_12px] bg-repeat md:bg-[length:20px_20px]"
         style={{
-          backgroundImage: `url(${borderPattern.url})`,
+          backgroundImage: `url("${borderPattern.url}")`,
           backgroundPosition: "top left",
         }}
       />

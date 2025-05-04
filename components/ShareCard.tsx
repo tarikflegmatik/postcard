@@ -5,7 +5,7 @@ const ShareCard = ({ postcardId }: { postcardId: number }) => {
     <form
       action={async () => {
         "use server";
-        incrementShareAnalytic(postcardId);
+        await incrementShareAnalytic(postcardId);
       }}
     >
       <button

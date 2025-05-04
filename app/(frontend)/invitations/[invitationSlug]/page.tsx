@@ -26,11 +26,11 @@ const Page = async ({
           "flex min-h-screen w-full flex-col items-center justify-center bg-gray-200 pt-16"
         }
       >
-        {invitation.pageHeader.backgroundImage && (
+        {invitation.pageContent.backgroundImage && (
           <div className={"fixed top-0 left-0 z-0 h-screen w-full"}>
             <Image
-              src={(invitation.pageHeader.backgroundImage as Media).url || ""}
-              alt={(invitation.pageHeader.backgroundImage as Media).alt || ""}
+              src={(invitation.pageContent.backgroundImage as Media).url || ""}
+              alt={(invitation.pageContent.backgroundImage as Media).alt || ""}
               className={"object-cover"}
               fill
             />
@@ -49,7 +49,7 @@ const Page = async ({
             }
           >
             <h3 className={"text-xl font-normal text-white md:text-3xl"}>
-              {invitation.pageHeader.subtitle}
+              {invitation.pageContent.subtitle}
             </h3>
           </div>
           <div
@@ -58,7 +58,7 @@ const Page = async ({
             }
           >
             <h1 className={"text-5xl font-bold text-white md:text-6xl"}>
-              {invitation.pageHeader.title}
+              {invitation.pageContent.title}
             </h1>
           </div>
           <div

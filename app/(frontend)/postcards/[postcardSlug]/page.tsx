@@ -31,7 +31,7 @@ const Page = async ({
             }
           >
             <h3 className={"text-xl md:text-3xl"}>
-              {postcard.pageHeader.subtitle}
+              {postcard.pageContent.subtitle}
             </h3>
           </div>
           <div
@@ -40,7 +40,7 @@ const Page = async ({
             }
           >
             <h1 className={"text-5xl md:text-6xl"}>
-              {postcard.pageHeader.title}
+              {postcard.pageContent.title}
             </h1>
           </div>
           <div

@@ -192,7 +192,7 @@ export interface Postcard {
   name: string;
   slug: string;
   location: number | Location;
-  pageHeader: {
+  pageContent: {
     subtitle: string;
     title: string;
   };
@@ -251,10 +251,22 @@ export interface Invitation {
   id: number;
   name: string;
   slug: string;
-  pageHeader: {
+  pageContent: {
     subtitle: string;
     title: string;
     backgroundImage?: (number | null) | Media;
+  };
+  /**
+   * Used for SEO and social sharing.
+   */
+  metadata?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    /**
+     * Adds <meta name='robots' content='noindex'>
+     */
+    noIndex?: boolean | null;
   };
   front: {
     mainImage: number | Media;
@@ -446,7 +458,7 @@ export interface PostcardsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   location?: T;
-  pageHeader?:
+  pageContent?:
     | T
     | {
         subtitle?: T;
@@ -484,12 +496,20 @@ export interface PostcardsSelect<T extends boolean = true> {
 export interface InvitationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  pageHeader?:
+  pageContent?:
     | T
     | {
         subtitle?: T;
         title?: T;
         backgroundImage?: T;
+      };
+  metadata?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
       };
   front?:
     | T
