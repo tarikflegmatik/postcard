@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import { FlipCardButton } from "./providers/FlipCardProvider";
 import { Invitation, Media, Postcard, Stamp } from "@/lib/types/payload-types";
-import Link from "next/link";
 import ScrollToSignup from "./ScrollToSignup";
 
 // Manually created Type, might cause an issue
