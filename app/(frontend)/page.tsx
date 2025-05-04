@@ -2,7 +2,7 @@ import { getLocations, getPostcardsByLocation } from "@/lib/data";
 import LocationSidebar from "@/components/LocationSidebar";
 import { SelectionProvider } from "@/components/providers/SelectionProvider";
 import Map from "@/components/Map";
-import PostcardsDrawer from "@/components/PostcardsDrawer";
+import CardsDrawer from "@/components/CardsDrawer";
 
 const Page = async () => {
   const [locations, postcards] = await Promise.all([
@@ -17,7 +17,7 @@ const Page = async () => {
         <LocationSidebar />
         <div className={"relative flex-1"}>
           <Map />
-          <PostcardsDrawer />
+          <CardsDrawer />
         </div>
       </SelectionProvider>
     </div>

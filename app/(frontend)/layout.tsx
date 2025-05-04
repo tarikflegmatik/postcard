@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Reenie_Beanie } from "next/font/google";
 import "./globals.css";
 import SplashScreen from "@/components/SplashScreen";
-import Navbar from "@/components/Navbar";
 
 const poppins = Poppins({
   weight: ["300", "400", "700"],
   variable: "--font-poppins",
+  subsets: ["latin"],
+});
+
+const reenieBeanie = Reenie_Beanie({
+  weight: "400",
+  variable: "--font-reenie-beanie",
   subsets: ["latin"],
 });
 
@@ -23,9 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} antialiased`}>
+      <body
+        className={`${poppins.className} ${reenieBeanie.variable} antialiased`}
+      >
         <SplashScreen />
-        <Navbar />
         {children}
       </body>
     </html>

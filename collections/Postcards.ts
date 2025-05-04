@@ -1,4 +1,5 @@
 import type { CollectionConfig, CollectionSlug } from "payload";
+import { baseCardFields } from "@/fields/baseCardFields";
 
 export const Postcards: CollectionConfig = {
   slug: "postcards",
@@ -47,45 +48,7 @@ export const Postcards: CollectionConfig = {
         },
       ],
     },
-    {
-      name: "front",
-      type: "group",
-      fields: [
-        {
-          name: "mainImage",
-          type: "upload",
-          relationTo: "media",
-          required: true,
-        },
-      ],
-    },
-    {
-      name: "back",
-      type: "group",
-      fields: [
-        {
-          name: "frameImage",
-          type: "upload",
-          relationTo: "media",
-        },
-        {
-          name: "messageText",
-          type: "richText",
-          required: true,
-        },
-        {
-          name: "postageStamp",
-          type: "relationship",
-          relationTo: "stamps" as CollectionSlug,
-          required: true,
-        },
-        {
-          name: "signatureText",
-          type: "richText",
-          required: true,
-        },
-      ],
-    },
+    ...baseCardFields,
     {
       name: "analytics",
       type: "group",

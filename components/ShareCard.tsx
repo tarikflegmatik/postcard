@@ -1,6 +1,6 @@
 import { incrementShareAnalytic } from "@/lib/mutations";
 
-const SharePostcard = ({ postcardId }: { postcardId: number }) => {
+const ShareCard = ({ postcardId }: { postcardId: number }) => {
   return (
     <form
       action={async () => {
@@ -20,4 +20,4 @@ const SharePostcard = ({ postcardId }: { postcardId: number }) => {
   );
 };
 
-export default SharePostcard;
+export default ShareCard;

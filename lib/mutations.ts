@@ -13,7 +13,6 @@ export const incrementViewAnalytic = async (postcardId: number) => {
     typeof postcard.analytics?.opens === "number"
       ? postcard.analytics.opens
       : 0;
-  console.log(current);
 
   await payload.update({
     collection: "postcards",

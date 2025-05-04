@@ -72,6 +72,7 @@ export interface Config {
     locations: Location;
     stamps: Stamp;
     postcards: Postcard;
+    invitations: Invitation;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,6 +84,7 @@ export interface Config {
     locations: LocationsSelect<false> | LocationsSelect<true>;
     stamps: StampsSelect<false> | StampsSelect<true>;
     postcards: PostcardsSelect<false> | PostcardsSelect<true>;
+    invitations: InvitationsSelect<false> | InvitationsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -196,9 +198,12 @@ export interface Postcard {
   };
   front: {
     mainImage: number | Media;
+    frameImage?: (number | null) | Media;
+    borderPattern?: (number | null) | Media;
   };
   back: {
     frameImage?: (number | null) | Media;
+    borderPattern?: (number | null) | Media;
     messageText: {
       root: {
         type: string;
@@ -240,6 +245,69 @@ export interface Postcard {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "invitations".
+ */
+export interface Invitation {
+  id: number;
+  name: string;
+  slug: string;
+  pageHeader: {
+    subtitle: string;
+    title: string;
+    backgroundImage?: (number | null) | Media;
+  };
+  front: {
+    mainImage: number | Media;
+    frameImage?: (number | null) | Media;
+    borderPattern?: (number | null) | Media;
+  };
+  back: {
+    frameImage?: (number | null) | Media;
+    borderPattern?: (number | null) | Media;
+    messageText: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    postageStamp: number | Stamp;
+    signatureText: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
+  registrations?:
+    | {
+        fullName: string;
+        registeredAt?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -264,6 +332,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'postcards';
         value: number | Postcard;
+      } | null)
+    | ({
+        relationTo: 'invitations';
+        value: number | Invitation;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -384,11 +456,14 @@ export interface PostcardsSelect<T extends boolean = true> {
     | T
     | {
         mainImage?: T;
+        frameImage?: T;
+        borderPattern?: T;
       };
   back?:
     | T
     | {
         frameImage?: T;
+        borderPattern?: T;
         messageText?: T;
         postageStamp?: T;
         signatureText?: T;
@@ -398,6 +473,46 @@ export interface PostcardsSelect<T extends boolean = true> {
     | {
         opens?: T;
         shares?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "invitations_select".
+ */
+export interface InvitationsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  pageHeader?:
+    | T
+    | {
+        subtitle?: T;
+        title?: T;
+        backgroundImage?: T;
+      };
+  front?:
+    | T
+    | {
+        mainImage?: T;
+        frameImage?: T;
+        borderPattern?: T;
+      };
+  back?:
+    | T
+    | {
+        frameImage?: T;
+        borderPattern?: T;
+        messageText?: T;
+        postageStamp?: T;
+        signatureText?: T;
+      };
+  registrations?:
+    | T
+    | {
+        fullName?: T;
+        registeredAt?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

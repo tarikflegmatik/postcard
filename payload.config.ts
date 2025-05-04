@@ -13,7 +13,7 @@ import { Locations } from "./collections/Locations";
 import { Stamps } from "./collections/Stamp";
 import { Postcards } from "./collections/Postcards";
 import { s3Storage } from "@payloadcms/storage-s3";
-import { CollectionOptions } from "@payloadcms/plugin-cloud-storage/types";
+import { Invitations } from "./collections/Invitations";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -25,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Locations, Stamps, Postcards],
+  collections: [Users, Media, Locations, Stamps, Postcards, Invitations],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

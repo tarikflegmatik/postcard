@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useSelection } from "@/components/providers/SelectionProvider";
 import { Media } from "@/lib/types/payload-types";
 
-const PostcardsDrawer = () => {
+const CardsDrawer = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [selectedPreviewIndex, setSelectedPreviewIndex] = useState<number>(0);
   const [isMobileLocationsDrawerOpen, setIsMobileLocationsDrawerOpen] =
@@ -210,4 +210,4 @@ const PostcardsDrawer = () => {
   );
 };
 
-export default PostcardsDrawer;
+export default CardsDrawer;

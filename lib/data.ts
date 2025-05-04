@@ -1,10 +1,29 @@
 import {
+  Invitation,
   Location,
   Postcard,
   PostcardsByLocation,
 } from "@/lib/types/payload-types";
 import { CollectionSlug, getPayload } from "payload";
 import config from "@payload-config";
+
+export const getInvitation = async (
+  slug: Invitation["slug"],
+): Promise<Invitation | null> => {
+  const payload = await getPayload({ config });
+  const data = await payload.find({
+    collection: "invitations" as CollectionSlug,
+    where: {
+      slug: { equals: slug },
+    },
+    limit: 1,
+  });
+
+  if (data.docs.length === 0) return null;
+
+  const [invitation] = data.docs;
+  return invitation as Invitation;
+};
 
 export const getPostcard = async (
   slug: Postcard["slug"],

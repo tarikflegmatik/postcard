@@ -75,7 +75,7 @@ export const FlipCardSide = ({
   const isBackSide = side === "back";
   return (
     <div
-      className={`absolute h-full w-full backface-hidden ${isBackSide ? "[transform:rotateY(180deg)]" : ""} ${className}`}
+      className={`absolute h-full w-full [-webkit-backface-visibility:hidden!important] backface-hidden ${isBackSide ? "rotate-y-180" : "rotate-y-0"} ${className}`}
     >
       {children}
     </div>
@@ -96,7 +96,7 @@ export const FlipCardButton = ({
   return (
     <button
       onClick={() => flipCard(side)}
-      className={`backface-hidden ${className}`}
+      className={`[-webkit-backface-visibility:hidden!important] backface-hidden ${className}`}
     >
       {children}
     </button>

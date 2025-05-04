@@ -1,8 +1,8 @@
 import { RefreshRouteOnSave } from "@/components/RefrechRouteOnSave";
 import { notFound } from "next/navigation";
-import PostcardComponent from "@/components/Postcard";
+import CardComponent from "@/components/Card";
 import { getPostcard } from "@/lib/data";
-import SharePostcard from "@/components/SharePostcard";
+import ShareCard from "@/components/ShareCard";
 import IncrementViewAnalytic from "@/components/IncrementViewAnalytic";
 
 const Page = async ({
@@ -48,10 +48,10 @@ const Page = async ({
               "col-span-12 grid sm:col-span-3 sm:col-start-10 sm:row-span-2 sm:row-start-1"
             }
           >
-            <SharePostcard postcardId={postcard.id} />
+            <ShareCard postcardId={postcard.id} />
           </div>
         </div>
-        <PostcardComponent postcard={postcard} />
+        <CardComponent card={postcard} />
       </div>
     </>
   );
