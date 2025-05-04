@@ -50,7 +50,7 @@ const SponsorLogos = () => {
       {logos.map((logo, index) => (
         <motion.div key={index} variants={itemVariants} className={"w-full"}>
           <Image
-            className="h-full w-auto object-contain"
+            className="w-auto object-contain"
             src={logo.src}
             alt={logo.alt}
           />
