@@ -16,9 +16,9 @@ const reenieBeanie = Reenie_Beanie({
 });
 
 export const metadata: Metadata = {
-  title: "PostMap – Send Postcards from Around the World",
+  title: "Your's Digitally - Razglednice",
   description:
-    "Discover beautiful locations across the globe, pick a postcard, personalize it with your message, and send it to your friends — all in just a few taps. PostMap brings the charm of travel and heartfelt Posts together on one modern, interactive map.",
+    "Pošaljite vašu omiljenu razglednicu u digitalnom obliku. - Your's Digitally",
 };
 
 export default function RootLayout({

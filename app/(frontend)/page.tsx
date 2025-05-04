@@ -1,25 +1,15 @@
-import { getLocations, getPostcardsByLocation } from "@/lib/data";
-import LocationSidebar from "@/components/LocationSidebar";
-import { SelectionProvider } from "@/components/providers/SelectionProvider";
-import Map from "@/components/Map";
-import CardsDrawer from "@/components/CardsDrawer";
+import Image from "next/image";
+import StampYoursDigitallyImage from "@/public/markica-zadnja.webp";
 
-const Page = async () => {
-  const [locations, postcards] = await Promise.all([
-    getLocations(),
-    getPostcardsByLocation(),
-  ]);
-
+const Page = () => {
   return (
-    <div className="flex h-screen w-screen overflow-visible pt-16">
-      <SelectionProvider locations={locations} postcardsByLocation={postcards}>
-        {/* Sidebar */}
-        <LocationSidebar />
-        <div className={"relative flex-1"}>
-          <Map />
-          <CardsDrawer />
-        </div>
-      </SelectionProvider>
+    <div className={"flex min-h-screen w-full items-center justify-center"}>
+      <div className={"w-7/12 max-w-96"}>
+        <Image
+          src={StampYoursDigitallyImage}
+          alt={"Your's Digitally Stamp Image"}
+        />
+      </div>
     </div>
   );
 };
