@@ -48,11 +48,7 @@ const SponsorLogos = () => {
       animate="visible"
     >
       {logos.map((logo, index) => (
-        <motion.div
-          key={index}
-          variants={itemVariants}
-          className={"h-full w-full"}
-        >
+        <motion.div key={index} variants={itemVariants} className={"w-full"}>
           <Image
             className="h-full w-auto object-contain"
             src={logo.src}
