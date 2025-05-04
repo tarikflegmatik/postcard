@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { FlipCardButton } from "./providers/FlipCardProvider";
 import { Invitation, Media, Postcard, Stamp } from "@/lib/types/payload-types";
+import Link from "next/link";
+import ScrollToSignup from "./ScrollToSignup";
 
 // Manually created Type, might cause an issue
 type LexicalNode = {
@@ -42,7 +44,7 @@ const CardBack = ({ card }: { card: Postcard | Invitation }) => {
         }
       >
         <div
-          className={`font-kalam flex h-full flex-1 flex-col justify-center gap-0.5 pr-2 text-base sm:gap-1 sm:text-lg md:gap-3 lg:gap-5 lg:text-3xl`}
+          className={`font-kalam flex h-full flex-3/5 flex-col justify-center gap-0.5 pr-2 text-base sm:gap-1 sm:text-xl md:gap-3 md:text-2xl lg:flex-1 lg:gap-5 lg:text-3xl`}
         >
           {messageTextCollection.map((textBlock, i) => (
             <p key={i} className={"[font-family:var(--font-reenie-beanie)]"}>
@@ -51,7 +53,9 @@ const CardBack = ({ card }: { card: Postcard | Invitation }) => {
           ))}
         </div>
         <div
-          className={"flex flex-1 flex-col items-center justify-between pl-2"}
+          className={
+            "flex flex-2/5 flex-col items-center justify-between pl-2 lg:flex-1"
+          }
         >
           <div className={"flex h-fit w-full justify-end"}>
             <div className={"w-8/12"}>
@@ -67,7 +71,7 @@ const CardBack = ({ card }: { card: Postcard | Invitation }) => {
             </div>
           </div>
           <div
-            className={`font-kalam flex h-full w-full flex-col items-center justify-center gap-2 text-base sm:text-lg lg:text-3xl`}
+            className={`font-kalam flex h-full w-full flex-col items-center justify-center gap-2 text-base sm:text-xl md:text-2xl lg:text-3xl`}
           >
             {signatureTextCollection.map((textBlock, i) => (
               <span
@@ -79,6 +83,7 @@ const CardBack = ({ card }: { card: Postcard | Invitation }) => {
                 {textBlock}
               </span>
             ))}
+            <ScrollToSignup />
           </div>
         </div>
       </div>

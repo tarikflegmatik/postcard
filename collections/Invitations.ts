@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { baseCardFields } from "@/fields/baseCardFields";
+import { revalidateTag } from "next/cache";
 
 export const Invitations: CollectionConfig = {
   slug: "invitations",
@@ -119,4 +120,24 @@ export const Invitations: CollectionConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [
+      async ({ doc, previousDoc }) => {
+        const currentSlug = doc.slug;
+        const previousSlug = previousDoc?.slug;
+
+        revalidateTag(`invitation-${currentSlug}`);
+
+        // If the slug changed, also invalidate the previous tag
+        if (previousSlug && previousSlug !== currentSlug) {
+          revalidateTag(`invitation-${previousSlug}`);
+        }
+      },
+    ],
+    afterDelete: [
+      async ({ doc }) => {
+        revalidateTag(`invitation-${doc.slug}`);
+      },
+    ],
+  },
 };

@@ -17,6 +17,7 @@ import {
   numeric,
   integer,
   jsonb,
+  boolean,
 } from "@payloadcms/db-postgres/drizzle/pg-core";
 import { sql, relations } from "@payloadcms/db-postgres/drizzle";
 
@@ -174,28 +175,19 @@ export const postcards = pgTable(
       .references(() => locations.id, {
         onDelete: "set null",
       }),
-    pageHeader_subtitle: varchar("page_header_subtitle").notNull(),
-    pageHeader_title: varchar("page_header_title").notNull(),
+    pageContent_subtitle: varchar("page_content_subtitle").notNull(),
+    pageContent_title: varchar("page_content_title").notNull(),
     front_mainImage: integer("front_main_image_id")
       .notNull()
       .references(() => media.id, {
         onDelete: "set null",
       }),
-    front_frameImage: integer("front_frame_image_id").references(
-      () => media.id,
-      {
-        onDelete: "set null",
-      },
-    ),
     front_borderPattern: integer("front_border_pattern_id").references(
       () => media.id,
       {
         onDelete: "set null",
       },
     ),
-    back_frameImage: integer("back_frame_image_id").references(() => media.id, {
-      onDelete: "set null",
-    }),
     back_borderPattern: integer("back_border_pattern_id").references(
       () => media.id,
       {
@@ -234,15 +226,9 @@ export const postcards = pgTable(
     postcards_front_front_main_image_idx: index(
       "postcards_front_front_main_image_idx",
     ).on(columns.front_mainImage),
-    postcards_front_front_frame_image_idx: index(
-      "postcards_front_front_frame_image_idx",
-    ).on(columns.front_frameImage),
     postcards_front_front_border_pattern_idx: index(
       "postcards_front_front_border_pattern_idx",
     ).on(columns.front_borderPattern),
-    postcards_back_back_frame_image_idx: index(
-      "postcards_back_back_frame_image_idx",
-    ).on(columns.back_frameImage),
     postcards_back_back_border_pattern_idx: index(
       "postcards_back_back_border_pattern_idx",
     ).on(columns.back_borderPattern),
@@ -290,33 +276,30 @@ export const invitations = pgTable(
     id: serial("id").primaryKey(),
     name: varchar("name").notNull(),
     slug: varchar("slug").notNull(),
-    pageHeader_subtitle: varchar("page_header_subtitle").notNull(),
-    pageHeader_title: varchar("page_header_title").notNull(),
-    pageHeader_backgroundImage: integer(
-      "page_header_background_image_id",
+    pageContent_subtitle: varchar("page_content_subtitle").notNull(),
+    pageContent_title: varchar("page_content_title").notNull(),
+    pageContent_backgroundImage: integer(
+      "page_content_background_image_id",
     ).references(() => media.id, {
       onDelete: "set null",
     }),
+    metadata_title: varchar("metadata_title"),
+    metadata_description: varchar("metadata_description"),
+    metadata_image: integer("metadata_image_id").references(() => media.id, {
+      onDelete: "set null",
+    }),
+    metadata_noIndex: boolean("metadata_no_index").default(false),
     front_mainImage: integer("front_main_image_id")
       .notNull()
       .references(() => media.id, {
         onDelete: "set null",
       }),
-    front_frameImage: integer("front_frame_image_id").references(
-      () => media.id,
-      {
-        onDelete: "set null",
-      },
-    ),
     front_borderPattern: integer("front_border_pattern_id").references(
       () => media.id,
       {
         onDelete: "set null",
       },
     ),
-    back_frameImage: integer("back_frame_image_id").references(() => media.id, {
-      onDelete: "set null",
-    }),
     back_borderPattern: integer("back_border_pattern_id").references(
       () => media.id,
       {
@@ -347,21 +330,18 @@ export const invitations = pgTable(
   },
   (columns) => ({
     invitations_slug_idx: uniqueIndex("invitations_slug_idx").on(columns.slug),
-    invitations_page_header_page_header_background_image_idx: index(
-      "invitations_page_header_page_header_background_image_idx",
-    ).on(columns.pageHeader_backgroundImage),
+    invitations_page_content_page_content_background_image_idx: index(
+      "invitations_page_content_page_content_background_image_idx",
+    ).on(columns.pageContent_backgroundImage),
+    invitations_metadata_metadata_image_idx: index(
+      "invitations_metadata_metadata_image_idx",
+    ).on(columns.metadata_image),
     invitations_front_front_main_image_idx: index(
       "invitations_front_front_main_image_idx",
     ).on(columns.front_mainImage),
-    invitations_front_front_frame_image_idx: index(
-      "invitations_front_front_frame_image_idx",
-    ).on(columns.front_frameImage),
     invitations_front_front_border_pattern_idx: index(
       "invitations_front_front_border_pattern_idx",
     ).on(columns.front_borderPattern),
-    invitations_back_back_frame_image_idx: index(
-      "invitations_back_back_frame_image_idx",
-    ).on(columns.back_frameImage),
     invitations_back_back_border_pattern_idx: index(
       "invitations_back_back_border_pattern_idx",
     ).on(columns.back_borderPattern),
@@ -601,20 +581,10 @@ export const relations_postcards = relations(postcards, ({ one }) => ({
     references: [media.id],
     relationName: "front_mainImage",
   }),
-  front_frameImage: one(media, {
-    fields: [postcards.front_frameImage],
-    references: [media.id],
-    relationName: "front_frameImage",
-  }),
   front_borderPattern: one(media, {
     fields: [postcards.front_borderPattern],
     references: [media.id],
     relationName: "front_borderPattern",
-  }),
-  back_frameImage: one(media, {
-    fields: [postcards.back_frameImage],
-    references: [media.id],
-    relationName: "back_frameImage",
   }),
   back_borderPattern: one(media, {
     fields: [postcards.back_borderPattern],
@@ -640,30 +610,25 @@ export const relations_invitations_registrations = relations(
 export const relations_invitations = relations(
   invitations,
   ({ one, many }) => ({
-    pageHeader_backgroundImage: one(media, {
-      fields: [invitations.pageHeader_backgroundImage],
+    pageContent_backgroundImage: one(media, {
+      fields: [invitations.pageContent_backgroundImage],
       references: [media.id],
-      relationName: "pageHeader_backgroundImage",
+      relationName: "pageContent_backgroundImage",
+    }),
+    metadata_image: one(media, {
+      fields: [invitations.metadata_image],
+      references: [media.id],
+      relationName: "metadata_image",
     }),
     front_mainImage: one(media, {
       fields: [invitations.front_mainImage],
       references: [media.id],
       relationName: "front_mainImage",
     }),
-    front_frameImage: one(media, {
-      fields: [invitations.front_frameImage],
-      references: [media.id],
-      relationName: "front_frameImage",
-    }),
     front_borderPattern: one(media, {
       fields: [invitations.front_borderPattern],
       references: [media.id],
       relationName: "front_borderPattern",
-    }),
-    back_frameImage: one(media, {
-      fields: [invitations.back_frameImage],
-      references: [media.id],
-      relationName: "back_frameImage",
     }),
     back_borderPattern: one(media, {
       fields: [invitations.back_borderPattern],

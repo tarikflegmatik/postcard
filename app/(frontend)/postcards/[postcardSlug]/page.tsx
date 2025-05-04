@@ -1,7 +1,7 @@
 import { RefreshRouteOnSave } from "@/components/RefrechRouteOnSave";
 import { notFound } from "next/navigation";
 import CardComponent from "@/components/Card";
-import { getPostcard } from "@/lib/data";
+import { getCachedPostcard } from "@/lib/data";
 import ShareCard from "@/components/ShareCard";
 import IncrementViewAnalytic from "@/components/IncrementViewAnalytic";
 
@@ -12,7 +12,7 @@ const Page = async ({
 }) => {
   const { postcardSlug } = await params;
 
-  const postcard = await getPostcard(postcardSlug);
+  const postcard = await getCachedPostcard(postcardSlug);
   if (!postcard) return notFound();
 
   return (

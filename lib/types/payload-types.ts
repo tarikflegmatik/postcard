@@ -198,11 +198,9 @@ export interface Postcard {
   };
   front: {
     mainImage: number | Media;
-    frameImage?: (number | null) | Media;
     borderPattern?: (number | null) | Media;
   };
   back: {
-    frameImage?: (number | null) | Media;
     borderPattern?: (number | null) | Media;
     messageText: {
       root: {
@@ -270,11 +268,9 @@ export interface Invitation {
   };
   front: {
     mainImage: number | Media;
-    frameImage?: (number | null) | Media;
     borderPattern?: (number | null) | Media;
   };
   back: {
-    frameImage?: (number | null) | Media;
     borderPattern?: (number | null) | Media;
     messageText: {
       root: {
@@ -468,13 +464,11 @@ export interface PostcardsSelect<T extends boolean = true> {
     | T
     | {
         mainImage?: T;
-        frameImage?: T;
         borderPattern?: T;
       };
   back?:
     | T
     | {
-        frameImage?: T;
         borderPattern?: T;
         messageText?: T;
         postageStamp?: T;
@@ -515,13 +509,11 @@ export interface InvitationsSelect<T extends boolean = true> {
     | T
     | {
         mainImage?: T;
-        frameImage?: T;
         borderPattern?: T;
       };
   back?:
     | T
     | {
-        frameImage?: T;
         borderPattern?: T;
         messageText?: T;
         postageStamp?: T;

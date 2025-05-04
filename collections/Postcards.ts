@@ -1,5 +1,6 @@
 import type { CollectionConfig, CollectionSlug } from "payload";
 import { baseCardFields } from "@/fields/baseCardFields";
+import { revalidateTag } from "next/cache";
 
 export const Postcards: CollectionConfig = {
   slug: "postcards",
@@ -74,4 +75,24 @@ export const Postcards: CollectionConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [
+      async ({ doc, previousDoc }) => {
+        const currentSlug = doc.slug;
+        const previousSlug = previousDoc?.slug;
+
+        revalidateTag(`postcard-${currentSlug}`);
+
+        // If the slug changed, also invalidate the previous tag
+        if (previousSlug && previousSlug !== currentSlug) {
+          revalidateTag(`postcard-${previousSlug}`);
+        }
+      },
+    ],
+    afterDelete: [
+      async ({ doc }) => {
+        revalidateTag(`postcard-${doc.slug}`);
+      },
+    ],
+  },
 };

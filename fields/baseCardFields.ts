@@ -12,11 +12,6 @@ export const baseCardFields: Field[] = [
         required: true,
       },
       {
-        name: "frameImage",
-        type: "upload",
-        relationTo: "media",
-      },
-      {
         name: "borderPattern",
         type: "upload",
         relationTo: "media",
@@ -27,11 +22,6 @@ export const baseCardFields: Field[] = [
     name: "back",
     type: "group",
     fields: [
-      {
-        name: "frameImage",
-        type: "upload",
-        relationTo: "media",
-      },
       {
         name: "borderPattern",
         type: "upload",

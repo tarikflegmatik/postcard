@@ -6,6 +6,8 @@ import {
 } from "@/lib/types/payload-types";
 import { CollectionSlug, getPayload } from "payload";
 import config from "@payload-config";
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
 
 export const getInvitation = async (
   slug: Invitation["slug"],
@@ -25,6 +27,13 @@ export const getInvitation = async (
   return invitation as Invitation;
 };
 
+export const getCachedInvitation = cache((slug: Invitation["slug"]) => {
+  return unstable_cache(
+    async () => getInvitation(slug),
+    ["invitation", `invitation-${slug}`],
+  )();
+});
+
 export const getPostcard = async (
   slug: Postcard["slug"],
 ): Promise<Postcard | null> => {
@@ -42,6 +51,13 @@ export const getPostcard = async (
   const [postcard] = data.docs;
   return postcard as Postcard;
 };
+
+export const getCachedPostcard = cache((slug: Postcard["slug"]) => {
+  return unstable_cache(
+    async () => getPostcard(slug),
+    ["postcard", `postcard-${slug}`],
+  )();
+});
 
 export const getPostcardsByLocation =
   async (): Promise<PostcardsByLocation> => {

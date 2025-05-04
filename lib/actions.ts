@@ -26,6 +26,9 @@ export const registerToInvitation = async (
   const name = formData.get("name") as string;
   const registeredAt = new Date().toISOString();
   const payload = await getPayload({ config });
+
+  if (!name.trim().length) return { error: "Invalid name.", status: 500 };
+
   try {
     // Ensure the invitation exists
     const [invitation] = await payload.db.drizzle
@@ -69,6 +72,7 @@ export const registerToInvitation = async (
   } catch (error: unknown) {
     const errorMessage = (error as Error).message;
     // You can customize error messages or status codes as needed
+    console.log(errorMessage);
     return { error: errorMessage || "Registration failed", status: 500 };
   }
 };

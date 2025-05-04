@@ -2,10 +2,11 @@ import Image from "next/image";
 import { RefreshRouteOnSave } from "@/components/RefrechRouteOnSave";
 import { notFound } from "next/navigation";
 import CardComponent from "@/components/Card";
-import { getInvitation } from "@/lib/data";
+import { getCachedInvitation } from "@/lib/data";
 import RegisterForm from "@/components/RegisterForm";
 import OrientationWarning from "@/components/OrientationWarning";
 import { Media } from "@/lib/types/payload-types";
+import SponsorLogos from "@/components/SponsorLogos";
 
 const Page = async ({
   params,
@@ -14,7 +15,7 @@ const Page = async ({
 }) => {
   const { invitationSlug } = await params;
 
-  const invitation = await getInvitation(invitationSlug);
+  const invitation = await getCachedInvitation(invitationSlug);
   if (!invitation) return notFound();
 
   return (
@@ -40,7 +41,7 @@ const Page = async ({
 
         <div
           className={
-            "relative z-10 grid w-full grid-cols-12 gap-y-2 p-6 sm:p-16 md:gap-y-4"
+            "relative z-10 hidden w-full grid-cols-12 gap-y-2 p-6 sm:p-16 md:gap-y-4 lg:grid"
           }
         >
           <div
@@ -71,11 +72,12 @@ const Page = async ({
         </div>
         <div
           className={
-            "relative z-10 flex w-full flex-col items-start justify-center gap-12 px-6 sm:px-16 xl:flex-row xl:gap-0"
+            "relative z-10 mb-16 flex w-full flex-col items-start justify-center gap-12 px-6 sm:px-16 xl:mb-0 xl:flex-row xl:gap-0"
           }
         >
           <div className={"mb-16 w-full xl:flex-1/3"}>
             <CardComponent card={invitation} />
+            <SponsorLogos />
           </div>
           <div className={"w-full xl:flex-1"}>
             <RegisterForm invitationId={invitation.id} />
