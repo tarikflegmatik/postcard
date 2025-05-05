@@ -83,7 +83,7 @@ const Page = async ({
             <CardComponent card={invitation} />
             <SponsorLogos />
           </div>
-          <div className={"w-full lg:max-w-[1020px] xl:flex-1"}>
+          <div className={"mb-16 w-full lg:max-w-[1020px] xl:flex-1"}>
             <RegisterForm invitationId={invitation.id} />
           </div>
         </div>
