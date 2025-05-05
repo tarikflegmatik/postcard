@@ -6,8 +6,9 @@ import TusLogo from "@/public/tus.webp";
 import UnistLogo from "@/public/sveuciliste-u-splitu-logo.webp";
 import HajdukLogo from "@/public/hajduk-logo.png";
 import DalmatiaLogo from "@/public/logo-new.png";
-import GovLogo from "@/public/mint-logo.png";
 import SdzLogo from "@/public/logo-sdz-new.png";
+import GovLogo from "@/public/mint-logo.png";
+import MestrovicLogo from "@/public/tmestrovic.webp";
 
 const logos = [
   { src: TusLogo, alt: "TusLogo" },
@@ -17,6 +18,7 @@ const logos = [
   { src: DalmatiaLogo, alt: "DalmatiaLogo" },
   { src: SdzLogo, alt: "SdzLogo" },
   { src: GovLogo, alt: "GovLogo" },
+  { src: MestrovicLogo, alt: "MestrovicLogo" },
 ];
 
 const containerVariants = {
