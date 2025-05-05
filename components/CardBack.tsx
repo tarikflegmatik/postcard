@@ -46,7 +46,7 @@ const CardBack = ({ card }: { card: Postcard | Invitation }) => {
           className={`font-kalam flex h-full flex-3/5 flex-col justify-center gap-0.5 pr-2 text-base sm:gap-1 sm:text-xl md:gap-3 md:text-2xl lg:flex-1 lg:gap-5 lg:text-3xl`}
         >
           {messageTextCollection.map((textBlock, i) => (
-            <p key={i} className={"[font-family:var(--font-reenie-beanie)]"}>
+            <p key={i} className={"[font-family:var(--font-caveat)]"}>
               {textBlock}
             </p>
           ))}
@@ -76,7 +76,7 @@ const CardBack = ({ card }: { card: Postcard | Invitation }) => {
               <span
                 key={i}
                 className={
-                  "ml-1 w-full text-center [font-family:var(--font-reenie-beanie)]"
+                  "ml-1 w-full text-center [font-family:var(--font-caveat)]"
                 }
               >
                 {textBlock}
