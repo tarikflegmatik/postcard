@@ -82,7 +82,9 @@ const CardBack = ({ card }: { card: Postcard | Invitation }) => {
                 {textBlock}
               </span>
             ))}
-            <ScrollToSignup />
+            <div className={"block xl:hidden"}>
+              <ScrollToSignup />
+            </div>
           </div>
         </div>
       </div>

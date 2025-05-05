@@ -15,8 +15,8 @@ const logos = [
   { src: UnistLogo, alt: "UnistLogo" },
   { src: HajdukLogo, alt: "HajdukLogo" },
   { src: DalmatiaLogo, alt: "DalmatiaLogo" },
-  { src: GovLogo, alt: "GovLogo" },
   { src: SdzLogo, alt: "SdzLogo" },
+  { src: GovLogo, alt: "GovLogo" },
 ];
 
 const containerVariants = {
@@ -42,7 +42,7 @@ const itemVariants = {
 const SponsorLogos = () => {
   return (
     <motion.div
-      className="mt-12 flex h-fit w-full items-center justify-around gap-4 bg-white p-5"
+      className="mt-12 flex h-fit w-full items-center justify-around gap-4 bg-white p-5 lg:max-w-[1020px]"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

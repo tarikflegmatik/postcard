@@ -32,6 +32,12 @@ export const generateMetadata = async ({
       type: "website",
       locale: "hr",
     },
+    twitter: {
+      card: "summary_large_image",
+      title: title,
+      description: description,
+      images: new URL(imageUrl),
+    },
   };
 };
 

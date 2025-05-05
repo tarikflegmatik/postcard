@@ -77,7 +77,9 @@ const Page = async ({
         >
           <div className={"mb-16 w-full xl:flex-1/3"}>
             <CardComponent card={invitation} />
-            <SponsorLogos />
+            <div className={"flex w-full justify-center"}>
+              <SponsorLogos />
+            </div>
           </div>
           <div className={"w-full xl:flex-1"}>
             <RegisterForm invitationId={invitation.id} />

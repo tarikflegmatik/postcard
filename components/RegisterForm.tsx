@@ -36,7 +36,7 @@ const RegisterForm = ({ invitationId }: { invitationId: number }) => {
         type={"submit"}
         disabled={isPending}
         className={
-          "border-2 border-white bg-[#BEA568] px-12 py-4 text-lg text-white hover:cursor-pointer hover:bg-white hover:text-[#BEA568] disabled:cursor-not-allowed disabled:border-[#d9cba0] disabled:bg-[#f3eddb] disabled:text-[#a49a71] disabled:hover:bg-[#f3eddb] disabled:hover:text-[#a49a71]"
+          "border-2 border-[#BEA568] bg-[#BEA568] px-12 py-4 text-lg text-white hover:cursor-pointer hover:bg-white hover:text-[#BEA568] disabled:cursor-not-allowed disabled:border-[#d9cba0] disabled:bg-[#f3eddb] disabled:text-[#a49a71] disabled:hover:bg-[#f3eddb] disabled:hover:text-[#a49a71]"
         }
       >
         {isPending ? "Slanje prijave..." : "Prijavi se"}
