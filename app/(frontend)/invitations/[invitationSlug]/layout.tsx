@@ -22,12 +22,12 @@ export const generateMetadata = async ({
     description: description,
     metadataBase: new URL(process.env.NEXT_PUBLIC_URL || ""),
     alternates: {
-      canonical: new URL(process.env.NEXT_PUBLIC_URL || ""),
+      canonical: `/invitations/${invitation.slug}`,
     },
     openGraph: {
       title: title,
       siteName: title,
-      url: new URL(process.env.NEXT_PUBLIC_URL || ""),
+      url: `/invitations/${invitation.slug}`,
       images: new URL(imageUrl),
       type: "website",
       locale: "hr",
