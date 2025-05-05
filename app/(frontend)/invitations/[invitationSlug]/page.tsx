@@ -72,20 +72,18 @@ const Page = async ({
         </div>
         <div
           className={
-            "relative z-10 mb-16 flex w-full flex-col items-start justify-center gap-12 px-6 sm:px-16 xl:mb-0 xl:flex-row xl:gap-0"
+            "relative z-10 mb-16 flex w-full flex-col items-center justify-center gap-12 px-6 sm:px-16 xl:mb-0 xl:flex-row xl:items-start xl:gap-0"
           }
         >
-          <div className={"mb-16 w-full xl:flex-1/3"}>
-            <CardComponent card={invitation} />
-            <div className={"flex w-full justify-center"}>
-              <SponsorLogos />
-            </div>
-          </div>
           <div
             className={
-              "w-full self-center lg:max-w-[1020px] xl:flex-1 xl:self-start"
+              "mb-16 flex w-full flex-col items-center lg:max-w-[1020px] xl:flex-1/3"
             }
           >
+            <CardComponent card={invitation} />
+            <SponsorLogos />
+          </div>
+          <div className={"w-full lg:max-w-[1020px] xl:flex-1"}>
             <RegisterForm invitationId={invitation.id} />
           </div>
         </div>

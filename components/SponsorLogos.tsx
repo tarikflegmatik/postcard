@@ -42,7 +42,7 @@ const itemVariants = {
 const SponsorLogos = () => {
   return (
     <motion.div
-      className="mt-12 flex h-fit w-full items-center justify-around gap-4 bg-white p-5 lg:max-w-[1020px]"
+      className="mt-12 flex h-fit w-full items-center justify-around gap-4 bg-white p-5"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

@@ -27,9 +27,7 @@ const CardComponent = ({ card }: { card: Postcard | Invitation }) => {
             Zadnja strana
           </FlipCardButton>
         </div>
-        <FlipCardWrapper
-          className={"flex aspect-[80/45] w-full flex-col lg:max-w-[1020px]"}
-        >
+        <FlipCardWrapper className={"flex aspect-[80/45] w-full flex-col"}>
           <FlipCardSide side={"front"}>
             <CardFront card={card} />
           </FlipCardSide>
