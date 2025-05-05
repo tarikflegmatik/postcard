@@ -81,7 +81,11 @@ const Page = async ({
               <SponsorLogos />
             </div>
           </div>
-          <div className={"w-full xl:flex-1"}>
+          <div
+            className={
+              "w-full self-center lg:max-w-[1020px] xl:flex-1 xl:self-start"
+            }
+          >
             <RegisterForm invitationId={invitation.id} />
           </div>
         </div>
