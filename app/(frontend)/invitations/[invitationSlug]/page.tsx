@@ -2,7 +2,7 @@ import Image from "next/image";
 import { RefreshRouteOnSave } from "@/components/RefrechRouteOnSave";
 import { notFound } from "next/navigation";
 import CardComponent from "@/components/Card";
-import { getCachedInvitation } from "@/lib/data";
+import { getInvitation } from "@/lib/data";
 import RegisterForm from "@/components/RegisterForm";
 import OrientationWarning from "@/components/OrientationWarning";
 import { Media } from "@/lib/types/payload-types";
@@ -15,7 +15,7 @@ const Page = async ({
 }) => {
   const { invitationSlug } = await params;
 
-  const invitation = await getCachedInvitation(invitationSlug);
+  const invitation = await getInvitation(invitationSlug);
   if (!invitation) return notFound();
 
   return (
