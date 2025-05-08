@@ -76,7 +76,7 @@ const CardBack = ({ card }: { card: Postcard | Invitation }) => {
               <span
                 key={i}
                 className={
-                  "ml-1 w-full text-center [font-family:var(--font-caveat)]"
+                  "ml-1 w-full max-w-[150px] border-b text-center [font-family:var(--font-caveat)] md:max-w-[220px] lg:max-w-[290px]"
                 }
               >
                 {textBlock}
