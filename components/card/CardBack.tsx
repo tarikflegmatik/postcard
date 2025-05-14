@@ -25,7 +25,7 @@ const CardBackBorder = ({
   card: Postcard | Invitation;
 }) => {
   if (type === "invitation") {
-    const borderPattern = card.front.borderPattern as Media;
+    const borderPattern = card.back.borderPattern as Media;
     if (!borderPattern) {
       return <div className="absolute inset-0 z-10 bg-white" />;
     }
