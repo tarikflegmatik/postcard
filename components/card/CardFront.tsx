@@ -14,6 +14,9 @@ const CardFrontBorder = ({
 }) => {
   if (type === "invitation") {
     const borderPattern = card.front.borderPattern as Media;
+    if (!borderPattern) {
+      return <div className="absolute inset-0 z-10 bg-white" />;
+    }
     return (
       <div
         className="absolute inset-0 z-10 bg-[length:12px_12px] bg-repeat-space md:bg-[length:20px_20px]"
