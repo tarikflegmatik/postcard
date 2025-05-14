@@ -1,25 +1,30 @@
 import { RefreshRouteOnSave } from "@/components/RefrechRouteOnSave";
 import { notFound } from "next/navigation";
 import CardComponent from "@/components/card/Card";
-import { getPostcard } from "@/lib/data";
+import { getCachedPostcardTemplate, getPostcardTemplates } from "@/lib/data";
 import ShareCard from "@/components/ShareCard";
 import IncrementViewAnalytic from "@/components/IncrementViewAnalytic";
-import { Media, Postcard } from "@/lib/types/payload-types";
 import Image from "next/image";
+import { Media } from "@/lib/types/payload-types";
 import OrientationWarning from "@/components/OrientationWarning";
+
+export const generateStaticParams = async () => {
+  const postcardTemplates = await getPostcardTemplates();
+
+  return postcardTemplates.map((postcardTemplate) => ({
+    postcardTemplateSlug: postcardTemplate.slug,
+  }));
+};
 
 const Page = async ({
   params,
 }: {
-  params: Promise<{ postcardSlug: string }>;
+  params: Promise<{ postcardTemplateSlug: string }>;
 }) => {
-  const { postcardSlug } = await params;
+  const { postcardTemplateSlug } = await params;
 
-  const postcard = await getPostcard(postcardSlug);
+  const postcard = await getCachedPostcardTemplate(postcardTemplateSlug);
   if (!postcard) return notFound();
-
-  const postcardTemplate = postcard.template as Postcard;
-  const signature = postcard.signature;
 
   return (
     <>
@@ -31,17 +36,11 @@ const Page = async ({
           "flex min-h-screen w-full flex-col items-center justify-center bg-gray-200 pt-16"
         }
       >
-        {postcardTemplate.pageContent.backgroundImage && (
+        {postcard.pageContent.backgroundImage && (
           <div className={"fixed top-0 left-0 z-0 h-screen w-full"}>
             <Image
-              src={
-                (postcardTemplate.pageContent.backgroundImage as Media).url ||
-                ""
-              }
-              alt={
-                (postcardTemplate.pageContent.backgroundImage as Media).alt ||
-                ""
-              }
+              src={(postcard.pageContent.backgroundImage as Media).url || ""}
+              alt={(postcard.pageContent.backgroundImage as Media).alt || ""}
               className={"object-cover"}
               fill
             />
@@ -59,7 +58,7 @@ const Page = async ({
             }
           >
             <h3 className={"text-xl font-normal text-white md:text-3xl"}>
-              {postcardTemplate.pageContent.subtitle}
+              {postcard.pageContent.subtitle}
             </h3>
           </div>
           <div
@@ -68,7 +67,7 @@ const Page = async ({
             }
           >
             <h1 className={"text-5xl font-bold text-white md:text-6xl"}>
-              {postcardTemplate.pageContent.title}
+              {postcard.pageContent.title}
             </h1>
           </div>
           <div
@@ -85,11 +84,7 @@ const Page = async ({
           }
         >
           <div className="w-full lg:max-w-[1020px]">
-            <CardComponent
-              type={"postcard-created"}
-              card={postcardTemplate}
-              signature={signature}
-            />
+            <CardComponent type={"postcard-template"} card={postcard} />
           </div>
         </div>
       </div>

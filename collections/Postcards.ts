@@ -47,32 +47,78 @@ export const Postcards: CollectionConfig = {
           type: "text",
           required: true,
         },
+        {
+          name: "backgroundImage",
+          type: "upload",
+          required: false,
+          relationTo: "media",
+        },
+      ],
+    },
+    {
+      name: "metadata",
+      type: "group",
+      label: "Page Metadata",
+      admin: {
+        description: "Used for SEO and social sharing.",
+      },
+      fields: [
+        {
+          name: "title",
+          type: "text",
+          label: "Meta Title",
+          required: false,
+          admin: {
+            placeholder: "Used as <title> tag and Open Graph title",
+          },
+        },
+        {
+          name: "description",
+          type: "textarea",
+          label: "Meta Description",
+          required: false,
+          admin: {
+            placeholder: "Used for SEO and social previews",
+          },
+          validate: (value) => {
+            if (value && value.length < 160) return true;
+            return "Meta description must be 160 characters or fewer.";
+          },
+        },
+        {
+          name: "image",
+          type: "upload",
+          label: "Social Share Image",
+          relationTo: "media",
+          required: false,
+        },
+        {
+          name: "noIndex",
+          type: "checkbox",
+          label: "Prevent Search Indexing",
+          defaultValue: false,
+          admin: {
+            description: "Adds <meta name='robots' content='noindex'>",
+          },
+        },
       ],
     },
     ...baseCardFields,
     {
-      name: "analytics",
-      type: "group",
-      admin: { readOnly: true },
-      fields: [
-        {
-          type: "row",
-          fields: [
-            {
-              name: "opens",
-              type: "number",
-              defaultValue: 0,
-              admin: { width: "50%" },
-            },
-            {
-              name: "shares",
-              type: "number",
-              defaultValue: 0,
-              admin: { width: "50%" },
-            },
-          ],
-        },
-      ],
+      name: "hashtag",
+      type: "text",
+      label: "Hashtag",
+      maxLength: 30,
+      admin: {
+        description:
+          "Shown in the bottom right corner of the postcard, like #YoursDigitally",
+      },
+    },
+    {
+      name: "borderImage",
+      type: "upload",
+      required: false,
+      relationTo: "media",
     },
   ],
   hooks: {
@@ -82,6 +128,7 @@ export const Postcards: CollectionConfig = {
         const previousSlug = previousDoc?.slug;
 
         revalidateTag(`postcard-${currentSlug}`);
+        revalidateTag("postcards");
 
         // If the slug changed, also invalidate the previous tag
         if (previousSlug && previousSlug !== currentSlug) {

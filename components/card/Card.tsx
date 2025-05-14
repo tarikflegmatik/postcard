@@ -5,34 +5,50 @@ import {
   FlipCardSide,
   FlipCardWrapper,
 } from "@/components/providers/FlipCardProvider";
-import CardFront from "@/components/CardFront";
-import CardBack from "@/components/CardBack";
+import CardFront from "@/components/card/CardFront";
+import CardBack from "@/components/card/CardBack";
 import { Invitation, Postcard } from "@/lib/types/payload-types";
 
-const CardComponent = ({ card }: { card: Postcard | Invitation }) => {
+type CardPreviewType = "postcard-template" | "invitation" | "postcard-created";
+
+const CardComponent = ({
+  type,
+  card,
+  signature,
+}: {
+  type: CardPreviewType;
+  card: Postcard | Invitation;
+  signature?: string;
+}) => {
+  if (type === "postcard-created" && signature === undefined) {
+    throw new Error(
+      "Card is in postcard-created mode, but missing 'signature' value.",
+    );
+  }
+
   return (
     <FlipCardProvider>
       <div className={"flex w-full flex-col items-center"}>
-        <div className={"flex w-full justify-center divide-x"}>
+        <div className={"flex w-full justify-center divide-x divide-white"}>
           <FlipCardButton
             side={"front"}
-            className={"p-4 text-white hover:cursor-pointer"}
+            className={"min-w-[150px] p-4 text-white hover:cursor-pointer"}
           >
             Prednja strana
           </FlipCardButton>
           <FlipCardButton
             side={"back"}
-            className={"p-4 text-white hover:cursor-pointer"}
+            className={"min-w-[150px] p-4 text-white hover:cursor-pointer"}
           >
             Zadnja strana
           </FlipCardButton>
         </div>
         <FlipCardWrapper className={"flex aspect-[80/45] w-full flex-col"}>
           <FlipCardSide side={"front"}>
-            <CardFront card={card} />
+            <CardFront type={type} card={card} />
           </FlipCardSide>
           <FlipCardSide side={"back"}>
-            <CardBack card={card} />
+            <CardBack type={type} card={card} signature={signature} />
           </FlipCardSide>
         </FlipCardWrapper>
       </div>

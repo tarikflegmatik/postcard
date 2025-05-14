@@ -20,7 +20,7 @@ type InvitationRegistrationState = {
 
 export const registerToInvitation = async (
   invitationId: number,
-  prevState: InvitationRegistrationState,
+  _prevState: InvitationRegistrationState,
   formData: FormData,
 ): Promise<InvitationRegistrationState> => {
   const name = formData.get("name") as string;
@@ -74,5 +74,43 @@ export const registerToInvitation = async (
     // You can customize error messages or status codes as needed
     console.log(errorMessage);
     return { error: errorMessage || "Registration failed", status: 500 };
+  }
+};
+
+type PostcardCreationState = {
+  error: string | null;
+  data: { signedPostcardSlug: string } | null;
+} | null;
+
+export const createSignedPostcard = async (
+  senderName: string,
+  postcardTemplateId: number,
+): Promise<PostcardCreationState> => {
+  const payload = await getPayload({ config });
+
+  if (!senderName.trim() || !postcardTemplateId) {
+    return {
+      error: "Missing sender name or postcard template ID.",
+      data: null,
+    };
+  }
+
+  try {
+    const newPostcard = await payload.create({
+      collection: "signedPostcards",
+      data: {
+        signature: senderName,
+        template: postcardTemplateId,
+      },
+    });
+
+    return {
+      error: null,
+      data: { signedPostcardSlug: newPostcard.slug! },
+    };
+  } catch (error: unknown) {
+    const errorMessage = (error as Error).message;
+    console.log(error);
+    return { error: errorMessage || "Postcard creation failed", data: null };
   }
 };

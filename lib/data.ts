@@ -3,6 +3,7 @@ import {
   Location,
   Postcard,
   PostcardsByLocation,
+  SignedPostcard,
 } from "@/lib/types/payload-types";
 import { CollectionSlug, getPayload } from "payload";
 import config from "@payload-config";
@@ -28,13 +29,12 @@ export const getInvitation = async (
 };
 
 export const getCachedInvitation = cache((slug: Invitation["slug"]) => {
-  return unstable_cache(
-    async () => getInvitation(slug),
-    ["invitation", `invitation-${slug}`],
-  )();
+  return unstable_cache(async () => getInvitation(slug), [slug], {
+    tags: ["invitation", `invitation-${slug}`],
+  })();
 });
 
-export const getPostcard = async (
+export const getPostcardTemplate = async (
   slug: Postcard["slug"],
 ): Promise<Postcard | null> => {
   const payload = await getPayload({ config });
@@ -52,22 +52,50 @@ export const getPostcard = async (
   return postcard as Postcard;
 };
 
-export const getCachedPostcard = cache((slug: Postcard["slug"]) => {
-  return unstable_cache(
-    async () => getPostcard(slug),
-    ["postcard", `postcard-${slug}`],
-  )();
+export const getCachedPostcardTemplate = cache((slug: Postcard["slug"]) => {
+  return unstable_cache(async () => getPostcardTemplate(slug), [slug], {
+    tags: [`postcard-${slug}`],
+  })();
 });
 
-export const getPostcardsByLocation =
-  async (): Promise<PostcardsByLocation> => {
-    const payload = await getPayload({ config });
-    const data = await payload.find({
-      collection: "postcards" as CollectionSlug,
-      pagination: false,
-    });
+export const getPostcard = async (
+  slug: SignedPostcard["slug"],
+): Promise<SignedPostcard | null> => {
+  const payload = await getPayload({ config });
+  const data = await payload.find({
+    collection: "signedPostcards" as CollectionSlug,
+    where: {
+      slug: { equals: slug },
+    },
+    depth: 3,
+    limit: 1,
+  });
 
-    const postcards = data.docs as Postcard[];
+  if (data.docs.length === 0) return null;
+
+  const [postcard] = data.docs;
+  return postcard as SignedPostcard;
+};
+
+export const getPostcardTemplates = async (): Promise<Postcard[]> => {
+  const payload = await getPayload({ config });
+  const data = await payload.find({
+    collection: "postcards" as CollectionSlug,
+    pagination: false,
+  });
+
+  return data.docs as Postcard[];
+};
+
+export const getCachedPostcardTemplates = cache(() => {
+  return unstable_cache(async () => getPostcardTemplates(), [], {
+    tags: [`postcards`],
+  })();
+});
+
+export const getPostcardTemplatesByLocation =
+  async (): Promise<PostcardsByLocation> => {
+    const postcards = await getCachedPostcardTemplates();
 
     return postcards.reduce((grouped, postcard) => {
       const location = postcard.location as Location;
@@ -91,4 +119,14 @@ export const getLocations = async (): Promise<Location[]> => {
   });
 
   return data.docs as Location[];
+};
+
+export const getInvitations = async (): Promise<Invitation[]> => {
+  const payload = await getPayload({ config });
+  const data = await payload.find({
+    collection: "invitations" as CollectionSlug,
+    pagination: false,
+  });
+
+  return data.docs as Invitation[];
 };

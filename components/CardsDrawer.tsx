@@ -138,7 +138,7 @@ const CardsDrawer = () => {
 
               <div className="flex w-full justify-center">
                 <Link
-                  href={`/postcards/${filteredPostcards[selectedPreviewIndex].slug}`}
+                  href={`/postcards/templates/${filteredPostcards[selectedPreviewIndex].slug}`}
                   target={"_blank"}
                   className="border bg-black px-6 py-2 text-white shadow-md transition-colors hover:bg-white hover:text-black"
                 >

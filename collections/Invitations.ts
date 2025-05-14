@@ -96,7 +96,6 @@ export const Invitations: CollectionConfig = {
         },
       ],
     },
-
     ...baseCardFields,
     {
       name: "registrations",

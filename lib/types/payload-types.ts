@@ -73,6 +73,7 @@ export interface Config {
     stamps: Stamp;
     postcards: Postcard;
     invitations: Invitation;
+    signedPostcards: SignedPostcard;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +86,7 @@ export interface Config {
     stamps: StampsSelect<false> | StampsSelect<true>;
     postcards: PostcardsSelect<false> | PostcardsSelect<true>;
     invitations: InvitationsSelect<false> | InvitationsSelect<true>;
+    signedPostcards: SignedPostcardsSelect<false> | SignedPostcardsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -195,6 +197,19 @@ export interface Postcard {
   pageContent: {
     subtitle: string;
     title: string;
+    backgroundImage?: (number | null) | Media;
+  };
+  /**
+   * Used for SEO and social sharing.
+   */
+  metadata?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    /**
+     * Adds <meta name='robots' content='noindex'>
+     */
+    noIndex?: boolean | null;
   };
   front: {
     mainImage: number | Media;
@@ -234,10 +249,11 @@ export interface Postcard {
       [k: string]: unknown;
     };
   };
-  analytics?: {
-    opens?: number | null;
-    shares?: number | null;
-  };
+  /**
+   * Shown in the bottom right corner of the postcard, like #YoursDigitally
+   */
+  hashtag?: string | null;
+  borderImage?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -316,6 +332,22 @@ export interface Invitation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "signedPostcards".
+ */
+export interface SignedPostcard {
+  id: number;
+  template: number | Postcard;
+  signature: string;
+  slug?: string | null;
+  analytics?: {
+    opens?: number | null;
+    shares?: number | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -344,6 +376,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'invitations';
         value: number | Invitation;
+      } | null)
+    | ({
+        relationTo: 'signedPostcards';
+        value: number | SignedPostcard;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -459,6 +495,15 @@ export interface PostcardsSelect<T extends boolean = true> {
     | {
         subtitle?: T;
         title?: T;
+        backgroundImage?: T;
+      };
+  metadata?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
       };
   front?:
     | T
@@ -474,12 +519,8 @@ export interface PostcardsSelect<T extends boolean = true> {
         postageStamp?: T;
         signatureText?: T;
       };
-  analytics?:
-    | T
-    | {
-        opens?: T;
-        shares?: T;
-      };
+  hashtag?: T;
+  borderImage?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -525,6 +566,23 @@ export interface InvitationsSelect<T extends boolean = true> {
         fullName?: T;
         registeredAt?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "signedPostcards_select".
+ */
+export interface SignedPostcardsSelect<T extends boolean = true> {
+  template?: T;
+  signature?: T;
+  slug?: T;
+  analytics?:
+    | T
+    | {
+        opens?: T;
+        shares?: T;
       };
   updatedAt?: T;
   createdAt?: T;

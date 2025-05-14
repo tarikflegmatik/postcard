@@ -1,12 +1,20 @@
 import Image from "next/image";
 import { RefreshRouteOnSave } from "@/components/RefrechRouteOnSave";
 import { notFound } from "next/navigation";
-import CardComponent from "@/components/Card";
-import { getCachedInvitation } from "@/lib/data";
+import CardComponent from "@/components/card/Card";
+import { getCachedInvitation, getInvitations } from "@/lib/data";
 import RegisterForm from "@/components/RegisterForm";
 import OrientationWarning from "@/components/OrientationWarning";
 import { Media } from "@/lib/types/payload-types";
 import SponsorLogos from "@/components/SponsorLogos";
+
+export const generateStaticParams = async () => {
+  const invitations = await getInvitations();
+
+  return invitations.map((invitation) => ({
+    invitationSlug: invitation.slug,
+  }));
+};
 
 const Page = async ({
   params,
@@ -38,7 +46,6 @@ const Page = async ({
             <div className="absolute inset-0 bg-black/50" />
           </div>
         )}
-
         <div
           className={
             "relative z-10 hidden w-full grid-cols-12 gap-y-2 p-6 sm:p-16 md:gap-y-4 lg:grid"
@@ -80,7 +87,7 @@ const Page = async ({
               "mb-16 flex w-full flex-col items-center lg:max-w-[1020px] xl:flex-1/3"
             }
           >
-            <CardComponent card={invitation} />
+            <CardComponent type={"invitation"} card={invitation} />
             <SponsorLogos />
           </div>
           <div className={"mb-16 w-full lg:max-w-[1020px] xl:flex-1"}>
