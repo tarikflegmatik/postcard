@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import CustomMarker from "@/components/CustomMarker";
 import { useSelection } from "@/components/providers/SelectionProvider";
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
 

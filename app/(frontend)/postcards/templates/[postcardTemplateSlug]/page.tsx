@@ -2,11 +2,14 @@ import { RefreshRouteOnSave } from "@/components/RefrechRouteOnSave";
 import { notFound } from "next/navigation";
 import CardComponent from "@/components/card/Card";
 import { getCachedPostcardTemplate, getPostcardTemplates } from "@/lib/data";
-import ShareCard from "@/components/ShareCard";
-import IncrementViewAnalytic from "@/components/IncrementViewAnalytic";
 import Image from "next/image";
 import { Media } from "@/lib/types/payload-types";
 import OrientationWarning from "@/components/OrientationWarning";
+import CreatePostcardForm from "@/components/CreatePostcardForm";
+import { CardContentProvider } from "@/components/providers/CardContentProvider";
+import { FlipCardProvider } from "@/components/providers/FlipCardProvider";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export const generateStaticParams = async () => {
   const postcardTemplates = await getPostcardTemplates();
@@ -30,7 +33,6 @@ const Page = async ({
     <>
       <RefreshRouteOnSave />
       <OrientationWarning />
-      {postcard && <IncrementViewAnalytic postcardId={postcard.id} />}
       <div
         className={
           "flex min-h-screen w-full flex-col items-center justify-center bg-gray-200 pt-16"
@@ -48,6 +50,14 @@ const Page = async ({
           </div>
         )}
         <div
+          className={"relative z-10 flex w-full justify-start px-6 sm:px-16"}
+        >
+          <Link href={"/postcards"} className={"flex gap-1"}>
+            <ArrowLeft color={"white"} />
+            <span className={"text-xl font-semibold text-white"}>Back</span>
+          </Link>
+        </div>
+        <div
           className={
             "relative z-10 grid w-full grid-cols-12 gap-y-2 p-6 sm:p-16 md:gap-y-4"
           }
@@ -61,31 +71,37 @@ const Page = async ({
               {postcard.pageContent.subtitle}
             </h3>
           </div>
-          <div
-            className={
-              "col-span-12 col-start-1 row-span-1 row-start-2 md:col-span-8 lg:col-span-6"
-            }
-          >
+          <div className={"col-span-12 col-start-1 row-span-1 row-start-2"}>
             <h1 className={"text-5xl font-bold text-white md:text-6xl"}>
               {postcard.pageContent.title}
             </h1>
           </div>
-          <div
-            className={
-              "col-span-12 grid sm:col-span-3 sm:col-start-10 sm:row-start-1 md:row-span-2"
-            }
-          >
-            <ShareCard postcardId={postcard.id} />
-          </div>
         </div>
         <div
           className={
-            "relative z-10 mb-16 flex w-full items-center justify-center px-6 sm:px-16"
+            "relative z-10 mb-16 flex w-full flex-col items-center justify-center gap-12 px-6 sm:px-16 xl:mb-0 xl:flex-row xl:items-start xl:gap-0"
           }
         >
-          <div className="w-full lg:max-w-[1020px]">
-            <CardComponent type={"postcard-template"} card={postcard} />
-          </div>
+          <CardContentProvider>
+            <FlipCardProvider>
+              <div
+                className={
+                  "mb-16 flex w-full flex-col items-center lg:max-w-[1020px] xl:flex-1/3"
+                }
+              >
+                <CardComponent
+                  type={"postcard-template"}
+                  lang={"english"}
+                  card={postcard}
+                  withFlipProvider={false}
+                  withContentProvider={false}
+                />
+              </div>
+              <div className={"mb-16 hidden flex-1 xl:block"}>
+                <CreatePostcardForm postcardTemplateId={postcard.id} />
+              </div>
+            </FlipCardProvider>
+          </CardContentProvider>
         </div>
       </div>
     </>

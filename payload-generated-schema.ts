@@ -16,8 +16,8 @@ import {
   varchar,
   numeric,
   integer,
-  jsonb,
   boolean,
+  jsonb,
 } from "@payloadcms/db-postgres/drizzle/pg-core";
 import { sql, relations } from "@payloadcms/db-postgres/drizzle";
 
@@ -177,6 +177,17 @@ export const postcards = pgTable(
       }),
     pageContent_subtitle: varchar("page_content_subtitle").notNull(),
     pageContent_title: varchar("page_content_title").notNull(),
+    pageContent_backgroundImage: integer(
+      "page_content_background_image_id",
+    ).references(() => media.id, {
+      onDelete: "set null",
+    }),
+    metadata_title: varchar("metadata_title"),
+    metadata_description: varchar("metadata_description"),
+    metadata_image: integer("metadata_image_id").references(() => media.id, {
+      onDelete: "set null",
+    }),
+    metadata_noIndex: boolean("metadata_no_index").default(false),
     front_mainImage: integer("front_main_image_id")
       .notNull()
       .references(() => media.id, {
@@ -201,8 +212,10 @@ export const postcards = pgTable(
         onDelete: "set null",
       }),
     back_signatureText: jsonb("back_signature_text").notNull(),
-    analytics_opens: numeric("analytics_opens").default("0"),
-    analytics_shares: numeric("analytics_shares").default("0"),
+    hashtag: varchar("hashtag"),
+    borderImage: integer("border_image_id").references(() => media.id, {
+      onDelete: "set null",
+    }),
     updatedAt: timestamp("updated_at", {
       mode: "string",
       withTimezone: true,
@@ -223,6 +236,12 @@ export const postcards = pgTable(
     postcards_location_idx: index("postcards_location_idx").on(
       columns.location,
     ),
+    postcards_page_content_page_content_background_image_idx: index(
+      "postcards_page_content_page_content_background_image_idx",
+    ).on(columns.pageContent_backgroundImage),
+    postcards_metadata_metadata_image_idx: index(
+      "postcards_metadata_metadata_image_idx",
+    ).on(columns.metadata_image),
     postcards_front_front_main_image_idx: index(
       "postcards_front_front_main_image_idx",
     ).on(columns.front_mainImage),
@@ -235,6 +254,9 @@ export const postcards = pgTable(
     postcards_back_back_postage_stamp_idx: index(
       "postcards_back_back_postage_stamp_idx",
     ).on(columns.back_postageStamp),
+    postcards_border_image_idx: index("postcards_border_image_idx").on(
+      columns.borderImage,
+    ),
     postcards_updated_at_idx: index("postcards_updated_at_idx").on(
       columns.updatedAt,
     ),
@@ -357,6 +379,50 @@ export const invitations = pgTable(
   }),
 );
 
+export const signed_postcards = pgTable(
+  "signed_postcards",
+  {
+    id: serial("id").primaryKey(),
+    template: integer("template_id")
+      .notNull()
+      .references(() => postcards.id, {
+        onDelete: "set null",
+      }),
+    signature: varchar("signature").notNull(),
+    slug: varchar("slug"),
+    analytics_opens: numeric("analytics_opens").default("0"),
+    analytics_shares: numeric("analytics_shares").default("0"),
+    updatedAt: timestamp("updated_at", {
+      mode: "string",
+      withTimezone: true,
+      precision: 3,
+    })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp("created_at", {
+      mode: "string",
+      withTimezone: true,
+      precision: 3,
+    })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    signed_postcards_template_idx: index("signed_postcards_template_idx").on(
+      columns.template,
+    ),
+    signed_postcards_slug_idx: uniqueIndex("signed_postcards_slug_idx").on(
+      columns.slug,
+    ),
+    signed_postcards_updated_at_idx: index(
+      "signed_postcards_updated_at_idx",
+    ).on(columns.updatedAt),
+    signed_postcards_created_at_idx: index(
+      "signed_postcards_created_at_idx",
+    ).on(columns.createdAt),
+  }),
+);
+
 export const payload_locked_documents = pgTable(
   "payload_locked_documents",
   {
@@ -403,6 +469,7 @@ export const payload_locked_documents_rels = pgTable(
     stampsID: integer("stamps_id"),
     postcardsID: integer("postcards_id"),
     invitationsID: integer("invitations_id"),
+    signedPostcardsID: integer("signed_postcards_id"),
   },
   (columns) => ({
     order: index("payload_locked_documents_rels_order_idx").on(columns.order),
@@ -428,6 +495,9 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_invitations_id_idx: index(
       "payload_locked_documents_rels_invitations_id_idx",
     ).on(columns.invitationsID),
+    payload_locked_documents_rels_signed_postcards_id_idx: index(
+      "payload_locked_documents_rels_signed_postcards_id_idx",
+    ).on(columns.signedPostcardsID),
     parentFk: foreignKey({
       columns: [columns["parent"]],
       foreignColumns: [payload_locked_documents.id],
@@ -462,6 +532,11 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns["invitationsID"]],
       foreignColumns: [invitations.id],
       name: "payload_locked_documents_rels_invitations_fk",
+    }).onDelete("cascade"),
+    signedPostcardsIdFk: foreignKey({
+      columns: [columns["signedPostcardsID"]],
+      foreignColumns: [signed_postcards.id],
+      name: "payload_locked_documents_rels_signed_postcards_fk",
     }).onDelete("cascade"),
   }),
 );
@@ -576,6 +651,16 @@ export const relations_postcards = relations(postcards, ({ one }) => ({
     references: [locations.id],
     relationName: "location",
   }),
+  pageContent_backgroundImage: one(media, {
+    fields: [postcards.pageContent_backgroundImage],
+    references: [media.id],
+    relationName: "pageContent_backgroundImage",
+  }),
+  metadata_image: one(media, {
+    fields: [postcards.metadata_image],
+    references: [media.id],
+    relationName: "metadata_image",
+  }),
   front_mainImage: one(media, {
     fields: [postcards.front_mainImage],
     references: [media.id],
@@ -595,6 +680,11 @@ export const relations_postcards = relations(postcards, ({ one }) => ({
     fields: [postcards.back_postageStamp],
     references: [stamps.id],
     relationName: "back_postageStamp",
+  }),
+  borderImage: one(media, {
+    fields: [postcards.borderImage],
+    references: [media.id],
+    relationName: "borderImage",
   }),
 }));
 export const relations_invitations_registrations = relations(
@@ -645,6 +735,16 @@ export const relations_invitations = relations(
     }),
   }),
 );
+export const relations_signed_postcards = relations(
+  signed_postcards,
+  ({ one }) => ({
+    template: one(postcards, {
+      fields: [signed_postcards.template],
+      references: [postcards.id],
+      relationName: "template",
+    }),
+  }),
+);
 export const relations_payload_locked_documents_rels = relations(
   payload_locked_documents_rels,
   ({ one }) => ({
@@ -682,6 +782,11 @@ export const relations_payload_locked_documents_rels = relations(
       fields: [payload_locked_documents_rels.invitationsID],
       references: [invitations.id],
       relationName: "invitations",
+    }),
+    signedPostcardsID: one(signed_postcards, {
+      fields: [payload_locked_documents_rels.signedPostcardsID],
+      references: [signed_postcards.id],
+      relationName: "signedPostcards",
     }),
   }),
 );
@@ -729,6 +834,7 @@ type DatabaseSchema = {
   postcards: typeof postcards;
   invitations_registrations: typeof invitations_registrations;
   invitations: typeof invitations;
+  signed_postcards: typeof signed_postcards;
   payload_locked_documents: typeof payload_locked_documents;
   payload_locked_documents_rels: typeof payload_locked_documents_rels;
   payload_preferences: typeof payload_preferences;
@@ -741,6 +847,7 @@ type DatabaseSchema = {
   relations_postcards: typeof relations_postcards;
   relations_invitations_registrations: typeof relations_invitations_registrations;
   relations_invitations: typeof relations_invitations;
+  relations_signed_postcards: typeof relations_signed_postcards;
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels;
   relations_payload_locked_documents: typeof relations_payload_locked_documents;
   relations_payload_preferences_rels: typeof relations_payload_preferences_rels;

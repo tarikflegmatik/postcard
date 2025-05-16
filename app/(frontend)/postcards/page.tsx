@@ -2,7 +2,7 @@ import { getLocations, getPostcardTemplatesByLocation } from "@/lib/data";
 import LocationSidebar from "@/components/LocationSidebar";
 import { SelectionProvider } from "@/components/providers/SelectionProvider";
 import Map from "@/components/Map";
-import CardsDrawer from "@/components/CardsDrawer";
+import SelectCardDrawer from "@/components/SelectCardDrawer";
 
 const Page = async () => {
   const [locations, postcards] = await Promise.all([
@@ -11,12 +11,12 @@ const Page = async () => {
   ]);
 
   return (
-    <div className="flex h-screen w-screen overflow-visible pt-16">
+    <div className="flex h-screen w-screen items-start overflow-visible">
       <SelectionProvider locations={locations} postcardsByLocation={postcards}>
         <LocationSidebar />
-        <div className={"relative flex-1"}>
+        <div className={"relative h-full flex-1"}>
           <Map />
-          <CardsDrawer />
+          <SelectCardDrawer />
         </div>
       </SelectionProvider>
     </div>

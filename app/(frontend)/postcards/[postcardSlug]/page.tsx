@@ -2,11 +2,13 @@ import { RefreshRouteOnSave } from "@/components/RefrechRouteOnSave";
 import { notFound } from "next/navigation";
 import CardComponent from "@/components/card/Card";
 import { getPostcard } from "@/lib/data";
-import ShareCard from "@/components/ShareCard";
 import IncrementViewAnalytic from "@/components/IncrementViewAnalytic";
 import { Media, Postcard } from "@/lib/types/payload-types";
 import Image from "next/image";
 import OrientationWarning from "@/components/OrientationWarning";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import React from "react";
 
 const Page = async ({
   params,
@@ -49,6 +51,14 @@ const Page = async ({
           </div>
         )}
         <div
+          className={"relative z-10 flex w-full justify-start px-6 sm:px-16"}
+        >
+          <Link href={"/postcards"} className={"flex gap-1"}>
+            <ArrowLeft color={"white"} />
+            <span className={"text-xl font-semibold text-white"}>Back</span>
+          </Link>
+        </div>
+        <div
           className={
             "relative z-10 grid w-full grid-cols-12 gap-y-2 p-6 sm:p-16 md:gap-y-4"
           }
@@ -62,34 +72,40 @@ const Page = async ({
               {postcardTemplate.pageContent.subtitle}
             </h3>
           </div>
-          <div
-            className={
-              "col-span-12 col-start-1 row-span-1 row-start-2 md:col-span-8 lg:col-span-6"
-            }
-          >
+          <div className={"col-span-12 col-start-1 row-span-1 row-start-2"}>
             <h1 className={"text-5xl font-bold text-white md:text-6xl"}>
               {postcardTemplate.pageContent.title}
             </h1>
           </div>
-          <div
-            className={
-              "col-span-12 grid sm:col-span-3 sm:col-start-10 sm:row-start-1 md:row-span-2"
-            }
-          >
-            <ShareCard postcardId={postcard.id} />
-          </div>
         </div>
         <div
           className={
-            "relative z-10 mb-16 flex w-full items-center justify-center px-6 sm:px-16"
+            "relative z-10 mb-16 flex w-full flex-col items-center justify-center gap-12 px-6 sm:px-16 xl:mb-0 xl:flex-row xl:items-start xl:gap-0"
           }
         >
-          <div className="w-full lg:max-w-[1020px]">
+          <div
+            className={
+              "mb-16 flex w-full flex-col items-center lg:max-w-[1020px] xl:flex-1/3"
+            }
+          >
             <CardComponent
               type={"postcard-created"}
+              lang={"english"}
               card={postcardTemplate}
               signature={signature}
             />
+          </div>
+          <div className={"mb-16 hidden flex-1 xl:block"}>
+            <div className={"flex w-full justify-center self-center xl:pl-10"}>
+              <Link
+                href={"/postcards"}
+                className={
+                  "border-2 border-[#BEA568] bg-[#BEA568] px-12 py-4 text-lg text-white hover:cursor-pointer hover:bg-white hover:text-[#BEA568]"
+                }
+              >
+                Create your Postcard
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ export const Postcards: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     livePreview: {
-      url: ({ data }) => `/postcards/${data.slug}`,
+      url: ({ data }) => `/postcards/templates/${data.slug}`,
     },
   },
   fields: [

@@ -4,6 +4,7 @@ import { FlipCardButton } from "../providers/FlipCardProvider";
 import { Invitation, Media, Postcard } from "@/lib/types/payload-types";
 
 type CardPreviewType = "postcard-template" | "invitation" | "postcard-created";
+type CardSupportedLanguage = "english" | "croatian";
 
 const CardFrontBorder = ({
   type,
@@ -51,9 +52,11 @@ const CardFrontHashtag = ({ hashtag }: { hashtag: string }) => {
 
 const CardFront = ({
   type,
+  lang,
   card,
 }: {
   type: CardPreviewType;
+  lang: CardSupportedLanguage;
   card: Postcard | Invitation;
 }) => {
   const mainImage = card.front.mainImage as Media;
@@ -78,7 +81,7 @@ const CardFront = ({
           "absolute -top-3 -right-3 z-30 h-[60px] w-[60px] rounded-full border border-white bg-[#BEA568] text-xs font-semibold break-words text-white hover:cursor-pointer lg:text-sm lg:font-bold"
         }
       >
-        Okreni
+        {lang === "croatian" ? "Okreni" : "Flip"}
       </FlipCardButton>
     </div>
   );

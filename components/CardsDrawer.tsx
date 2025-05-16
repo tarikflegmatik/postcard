@@ -9,6 +9,7 @@ import { Media } from "@/lib/types/payload-types";
 
 const CardsDrawer = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselListRef = useRef<HTMLDivElement>(null);
   const [selectedPreviewIndex, setSelectedPreviewIndex] = useState<number>(0);
   const [isMobileLocationsDrawerOpen, setIsMobileLocationsDrawerOpen] =
     useState(false);
@@ -57,6 +58,13 @@ const CardsDrawer = () => {
       left: container.clientWidth * selectedPreviewIndex,
       behavior: "smooth",
     });
+    if (!carouselListRef.current) return;
+    const listContainer = carouselListRef.current;
+    const listItems = Array.from(listContainer.children);
+    listItems[selectedPreviewIndex].scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+    });
   }, [selectedPreviewIndex]);
 
   return (
@@ -68,7 +76,7 @@ const CardsDrawer = () => {
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed right-0 bottom-0 left-0 z-20 flex h-3/5 flex-col border-t border-black/5 bg-white p-6 shadow-md shadow-black/10 xl:left-72"
+          className="fixed right-0 bottom-0 left-0 z-20 flex min-h-3/5 flex-col border-t border-black/5 bg-white p-6 shadow-md shadow-black/10 xl:left-80"
         >
           <div className="mb-4 text-center">
             <h3 className="text-2xl font-bold">{selectedLocation?.name}</h3>
@@ -76,9 +84,8 @@ const CardsDrawer = () => {
               Select your favorite postcard design
             </p>
           </div>
-
-          <div className="flex flex-1 overflow-hidden">
-            <div className="hidden w-48 flex-col overflow-y-auto pr-4 md:flex">
+          <div className="mt-5 flex flex-1 overflow-hidden md:mt-6">
+            <div className="hidden w-60 flex-col overflow-y-auto pr-4 md:flex">
               {filteredPostcards.map((postcard, index) => (
                 <button
                   key={postcard.id}
@@ -112,14 +119,24 @@ const CardsDrawer = () => {
                   {filteredPostcards.map((postcard) => (
                     <div
                       key={postcard.id}
-                      className="relative aspect-[80/45] h-full w-full max-w-xl flex-shrink-0 snap-center"
+                      className={
+                        "flex h-full w-full max-w-xl flex-shrink-0 snap-center flex-col gap-2"
+                      }
                     >
-                      <Image
-                        src={(postcard.front.mainImage as Media).url || ""}
-                        alt={(postcard.front.mainImage as Media).alt || ""}
-                        fill
-                        className="rounded-lg object-cover shadow-lg"
-                      />
+                      <h2 className={"text-center text-xl font-semibold"}>
+                        {postcard.name}
+                      </h2>
+                      <div
+                        key={postcard.id}
+                        className="relative aspect-[80/45] h-full w-full"
+                      >
+                        <Image
+                          src={(postcard.front.mainImage as Media).url || ""}
+                          alt={(postcard.front.mainImage as Media).alt || ""}
+                          fill
+                          className="rounded-lg object-cover shadow-lg"
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -135,15 +152,51 @@ const CardsDrawer = () => {
                   &#8594;
                 </button>
               </div>
-
-              <div className="flex w-full justify-center">
+              <div className={"my-8 flex w-full justify-center md:hidden"}>
+                <div
+                  ref={carouselListRef}
+                  className={
+                    "flex h-14 w-full max-w-xl justify-center gap-1 overflow-x-auto scroll-smooth"
+                  }
+                >
+                  {filteredPostcards.map((postcard, index) => {
+                    const isSelected = selectedPreviewIndex === index;
+                    return (
+                      <div
+                        key={postcard.id}
+                        onClick={() => setSelectedPreviewIndex(index)}
+                        className={`relative aspect-[80/45] h-full py-4 transition-opacity hover:cursor-pointer ${isSelected ? "border-2 border-black opacity-100" : "opacity-60"}`}
+                      >
+                        <Image
+                          src={(postcard.front.mainImage as Media).url || ""}
+                          alt={(postcard.front.mainImage as Media).alt || ""}
+                          fill
+                          className="object-cover shadow-lg"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="flex w-full flex-col items-center justify-center gap-2 md:mt-5">
                 <Link
                   href={`/postcards/templates/${filteredPostcards[selectedPreviewIndex].slug}`}
                   target={"_blank"}
-                  className="border bg-black px-6 py-2 text-white shadow-md transition-colors hover:bg-white hover:text-black"
+                  className="w-full max-w-sm rounded-lg border bg-black py-5 text-center text-white shadow-md transition-colors hover:bg-white hover:text-black"
                 >
-                  Create Your Postcard
+                  Create your Postcard
                 </Link>
+                <button
+                  onClick={() => {
+                    setSelectedLocation(null);
+                    setIsMobileLocationsDrawerOpen(false);
+                  }}
+                  className={
+                    "mb-2 w-full max-w-sm rounded-lg border bg-white py-5 text-center text-black transition hover:cursor-pointer md:hidden"
+                  }
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>
@@ -175,7 +228,7 @@ const CardsDrawer = () => {
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed right-0 bottom-0 left-0 z-10 flex h-fit max-h-2/5 flex-col border-t border-black/5 bg-white p-6 pr-4 shadow-md shadow-black/10 md:hidden"
+          className="fixed right-0 bottom-0 left-0 z-10 flex h-full max-h-4/5 flex-col border-t border-black/5 bg-white p-6 pr-4 shadow-md shadow-black/10 md:hidden"
         >
           <h2 className="mb-4 text-center text-xl font-bold">Locations</h2>
           <div className={"flex flex-1 flex-col overflow-y-auto"}>
@@ -198,7 +251,7 @@ const CardsDrawer = () => {
           </div>
           <button
             className={
-              "flex w-full items-center justify-center rounded-lg bg-black px-4 py-5 text-white hover:cursor-pointer"
+              "mt-6 flex w-full items-center justify-center rounded-lg bg-black px-4 py-5 text-white hover:cursor-pointer"
             }
             onClick={() => setIsMobileLocationsDrawerOpen(false)}
           >

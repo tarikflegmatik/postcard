@@ -87,7 +87,11 @@ const Page = async ({
               "mb-16 flex w-full flex-col items-center lg:max-w-[1020px] xl:flex-1/3"
             }
           >
-            <CardComponent type={"invitation"} card={invitation} />
+            <CardComponent
+              type={"invitation"}
+              lang={"croatian"}
+              card={invitation}
+            />
             <SponsorLogos />
           </div>
           <div className={"mb-16 w-full lg:max-w-[1020px] xl:flex-1"}>

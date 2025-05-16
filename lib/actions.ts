@@ -90,7 +90,7 @@ export const createSignedPostcard = async (
 
   if (!senderName.trim() || !postcardTemplateId) {
     return {
-      error: "Missing sender name or postcard template ID.",
+      error: "Missing sender name.",
       data: null,
     };
   }

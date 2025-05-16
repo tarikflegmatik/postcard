@@ -1,6 +1,6 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
-import { postcards } from "@/payload-generated-schema";
+import { signed_postcards } from "@/payload-generated-schema";
 import { eq, sql } from "@payloadcms/db-postgres/drizzle";
 
 type AnalyticResult = {
@@ -18,12 +18,12 @@ export async function incrementViewAnalytic(
 
   try {
     await payload.db.drizzle
-      .update(postcards)
+      .update(signed_postcards)
       .set({
         // postcards.analytics_opens is a numeric column—this becomes `analytics_opens = analytics_opens + 1`
-        analytics_opens: sql`${postcards.analytics_opens} + 1`,
+        analytics_opens: sql`${signed_postcards.analytics_opens} + 1`,
       })
-      .where(eq(postcards.id, postcardId));
+      .where(eq(signed_postcards.id, postcardId));
 
     return { error: null, status: 200 };
   } catch (err: unknown) {
@@ -43,11 +43,11 @@ export async function incrementShareAnalytic(
 
   try {
     await payload.db.drizzle
-      .update(postcards)
+      .update(signed_postcards)
       .set({
-        analytics_shares: sql`${postcards.analytics_shares} + 1`,
+        analytics_shares: sql`${signed_postcards.analytics_shares} + 1`,
       })
-      .where(eq(postcards.id, postcardId));
+      .where(eq(signed_postcards.id, postcardId));
 
     return { error: null, status: 200 };
   } catch (err: unknown) {

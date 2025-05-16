@@ -5,7 +5,9 @@ import { useSelection } from "@/components/providers/SelectionProvider";
 const LocationSidebar = () => {
   const { locations, selectedLocation, setSelectedLocation } = useSelection();
   return (
-    <aside className="hidden w-72 flex-col overflow-y-auto border-r border-black/5 bg-white/90 p-4 pl-16 shadow-md shadow-black/10 md:flex">
+    <aside
+      className={`hidden ${selectedLocation ? "h-2/5" : "h-full"} w-80 flex-col overflow-y-auto border-r border-black/5 bg-white/90 pt-16 pr-10 pl-6 shadow-md shadow-black/10 md:flex xl:h-full xl:pl-16`}
+    >
       <h2 className="mb-4 text-xl font-bold">Locations</h2>
       {locations.map((location) => (
         <button
