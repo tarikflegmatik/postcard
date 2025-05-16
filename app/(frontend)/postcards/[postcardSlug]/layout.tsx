@@ -15,9 +15,10 @@ export const generateMetadata = async ({
 
   const postcardTemplate = postcard.template as Postcard;
 
-  const title = postcardTemplate.metadata?.title || "Razglednica";
+  const title = postcardTemplate.metadata?.title || "Yours Digitally";
   const description =
-    postcardTemplate.metadata?.description || "Razglednica Opis";
+    postcardTemplate.metadata?.description ||
+    "Personalised postcard. - Yours Digitally";
   const imageUrl = (postcardTemplate.metadata?.image as Media).url || "";
 
   return {

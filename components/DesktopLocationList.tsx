@@ -19,8 +19,10 @@ const DesktopLocationList: React.FC<DesktopLocationListProps> = ({
       <button
         key={postcard.id}
         onClick={() => onSelect(index)}
-        className={`mb-2 rounded-lg px-3 py-2 text-left transition hover:cursor-pointer ${
-          index === activeIndex ? "bg-black text-white" : "hover:bg-gray-100"
+        className={`mb-2 rounded-lg border-2 px-3 py-2 text-left transition hover:cursor-pointer ${
+          index === activeIndex
+            ? "border-[#007092] bg-[#007092]/10 font-semibold text-[#007092]"
+            : "border-transparent bg-[#80AFBE]/10 font-medium text-[#383838]"
         }`}
       >
         {postcard.name}

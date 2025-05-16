@@ -14,19 +14,9 @@ type PostcardCarouselProps = {
 };
 
 const CardCarousel = forwardRef<HTMLDivElement, PostcardCarouselProps>(
-  (
-    { postcards, activeIndex, onPrev, onNext, onSelect, listRef },
-    carouselRef,
-  ) => (
+  ({ postcards, activeIndex, onSelect, listRef }, carouselRef) => (
     <>
       <div className="relative flex flex-1 items-center justify-center">
-        <button
-          onClick={onPrev}
-          className="absolute top-1/2 left-4 z-10 -translate-y-1/2 rounded-full bg-white p-2 shadow-md hover:cursor-pointer"
-        >
-          &#8592;
-        </button>
-
         <div
           ref={carouselRef as React.RefObject<HTMLDivElement>}
           className="scrollbar-none flex w-full max-w-xl touch-pan-x snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth"
@@ -36,7 +26,7 @@ const CardCarousel = forwardRef<HTMLDivElement, PostcardCarouselProps>(
               key={postcard.id}
               className="flex h-full w-full max-w-xl flex-shrink-0 snap-center flex-col gap-2"
             >
-              <h2 className="text-center text-xl font-semibold">
+              <h2 className="text-left text-xl font-semibold md:text-center">
                 {postcard.name}
               </h2>
               <div className="relative aspect-[80/45] h-full w-full">
@@ -50,13 +40,6 @@ const CardCarousel = forwardRef<HTMLDivElement, PostcardCarouselProps>(
             </div>
           ))}
         </div>
-
-        <button
-          onClick={onNext}
-          className="absolute top-1/2 right-4 z-10 -translate-y-1/2 rounded-full bg-white p-2 shadow-md hover:cursor-pointer"
-        >
-          &#8594;
-        </button>
       </div>
 
       <div className="my-8 flex w-full justify-center md:hidden">
@@ -70,18 +53,20 @@ const CardCarousel = forwardRef<HTMLDivElement, PostcardCarouselProps>(
               <div
                 key={postcard.id}
                 onClick={() => onSelect(index)}
-                className={`relative aspect-[80/45] h-full transition-opacity hover:cursor-pointer ${
+                className={`relative aspect-[80/45] h-full rounded-sm p-0.5 transition-opacity hover:cursor-pointer ${
                   isSelected
-                    ? "border-2 border-black opacity-100"
+                    ? "border-2 border-[#007092] opacity-100"
                     : "opacity-60"
                 }`}
               >
-                <Image
-                  src={(postcard.front.mainImage as Media).url || ""}
-                  alt={(postcard.front.mainImage as Media).alt || ""}
-                  fill
-                  className="object-cover shadow-lg"
-                />
+                <div className={"relative h-full w-full"}>
+                  <Image
+                    src={(postcard.front.mainImage as Media).url || ""}
+                    alt={(postcard.front.mainImage as Media).alt || ""}
+                    fill
+                    className="object-cover shadow-lg"
+                  />
+                </div>
               </div>
             );
           })}

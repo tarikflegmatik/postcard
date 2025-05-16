@@ -41,7 +41,7 @@ const CardsDrawer = () => {
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed inset-x-0 bottom-0 z-20 flex flex-col bg-white p-6 shadow-md xl:left-80 xl:min-h-3/5"
+          className="fixed inset-x-0 bottom-0 z-20 flex flex-col rounded-t-4xl bg-white p-6 shadow-md md:rounded-none xl:left-80 xl:min-h-3/5"
         >
           <DrawerHeader name={selectedLocation.name} />
 
@@ -67,7 +67,7 @@ const CardsDrawer = () => {
                 <Link
                   href={`/postcards/templates/${filteredPostcards[activeIndex]?.slug}`}
                   target="_blank"
-                  className="w-full max-w-sm rounded-lg bg-black py-5 text-center text-white shadow-md hover:bg-white hover:text-black"
+                  className="w-full max-w-sm rounded-lg border-2 border-[#007092] bg-[#007092] py-5 text-center text-white shadow-md hover:bg-[#007092]/80"
                 >
                   Create your Postcard
                 </Link>
@@ -76,7 +76,7 @@ const CardsDrawer = () => {
                     setSelectedLocation(null);
                     setMobileLocationsOpen(false);
                   }}
-                  className="mb-2 w-full max-w-sm rounded-lg border bg-white py-5 text-center text-black hover:cursor-pointer md:hidden"
+                  className="mb-2 w-full max-w-sm rounded-lg border-2 border-[#007092] bg-white py-5 text-center text-[#007092] hover:cursor-pointer hover:text-[##007092]/80 md:hidden"
                 >
                   Close
                 </button>

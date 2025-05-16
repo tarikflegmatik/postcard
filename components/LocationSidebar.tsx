@@ -13,10 +13,10 @@ const LocationSidebar = () => {
         <button
           key={location.id}
           onClick={() => setSelectedLocation(location)}
-          className={`mb-2 rounded-lg px-3 py-2 text-left transition hover:cursor-pointer ${
+          className={`mb-2 rounded-lg border-2 px-3 py-2 text-left transition hover:cursor-pointer ${
             selectedLocation?.id === location.id
-              ? "bg-black text-white"
-              : "bg-gray-100 hover:bg-gray-200"
+              ? "border-[#007092] bg-[#007092]/10 font-semibold text-[#007092]"
+              : "border-transparent bg-[#80AFBE]/10 font-medium text-[#383838]"
           }`}
         >
           {location.name}

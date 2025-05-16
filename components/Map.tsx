@@ -14,7 +14,7 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
 const initMap = (container: HTMLDivElement): mapboxgl.Map => {
   return new mapboxgl.Map({
     container,
-    style: "mapbox://styles/mapbox/light-v11",
+    style: process.env.NEXT_PUBLIC_MAPBOX_STYLE,
     center: [16.453371, 43.469612],
     zoom: 9,
     minZoom: 4,

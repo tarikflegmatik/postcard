@@ -16,9 +16,8 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Your's Digitally - Razglednice",
-  description:
-    "Pošaljite vašu omiljenu razglednicu u digitalnom obliku. - Your's Digitally",
+  title: "Yours Digitally - Postcards",
+  description: "Send your personalised postcard. - Yours Digitally",
 };
 
 export default function RootLayout({

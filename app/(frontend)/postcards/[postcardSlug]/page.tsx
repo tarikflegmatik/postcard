@@ -73,7 +73,7 @@ const Page = async ({
                 "text-xl font-normal text-white lg:text-2xl xl:text-3xl"
               }
             >
-              {postcardTemplate.pageContent.subtitle}
+              {/*{postcardTemplate.pageContent.subtitle}*/}
             </h3>
           </div>
           <div className={"col-span-12 col-start-1 row-span-1 row-start-2"}>
