@@ -20,7 +20,7 @@ const CardFrontBorder = ({
     }
     return (
       <div
-        className="absolute inset-0 z-10 bg-[length:12px_12px] bg-repeat-space md:bg-[length:20px_20px]"
+        className="absolute inset-0 z-10 bg-[length:8px_8px] bg-repeat-space sm:bg-[length:12px_12px] md:bg-[length:20px_20px]"
         style={{
           backgroundImage: `url("${borderPattern.url}")`,
           backgroundPosition: "top left",
@@ -37,7 +37,9 @@ const CardFrontBorder = ({
 const CardFrontHashtag = ({ hashtag }: { hashtag: string }) => {
   return (
     <div
-      className={"absolute right-3 bottom-0 z-20 bg-white px-2 py-3 md:right-5"}
+      className={
+        "absolute right-2 bottom-0 z-20 bg-white px-1 py-2 sm:right-3 sm:px-2 sm:py-3 md:right-5"
+      }
     >
       <span
         className={
@@ -64,7 +66,9 @@ const CardFront = ({
 
   return (
     <div
-      className={"relative h-full w-full border bg-white p-3 shadow-xl md:p-5"}
+      className={
+        "relative h-full w-full border bg-white p-2 shadow-xl sm:p-3 md:p-5"
+      }
     >
       <CardFrontBorder type={type} card={card} />
       <div className={"relative z-20 h-full w-full"}>
@@ -78,7 +82,7 @@ const CardFront = ({
       {hashtag && <CardFrontHashtag hashtag={hashtag} />}
       <FlipCardButton
         className={
-          "absolute -top-3 -right-3 z-30 h-[60px] w-[60px] rounded-full border border-white bg-[#BEA568] text-xs font-semibold break-words text-white hover:cursor-pointer lg:text-sm lg:font-bold"
+          "absolute -top-3 -right-3 z-30 h-[45px] w-[45px] rounded-full border border-white bg-[#BEA568] text-xs font-semibold break-words text-white hover:cursor-pointer sm:h-[60px] sm:w-[60px] lg:text-sm lg:font-bold"
         }
       >
         {lang === "croatian" ? "Okreni" : "Flip"}

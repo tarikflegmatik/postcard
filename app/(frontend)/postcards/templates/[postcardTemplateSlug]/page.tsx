@@ -35,7 +35,7 @@ const Page = async ({
       <OrientationWarning />
       <div
         className={
-          "flex min-h-screen w-full flex-col items-center justify-center bg-gray-200 pt-16"
+          "flex min-h-screen w-full flex-col items-center justify-center bg-gray-200 pt-8 lg:pt-16"
         }
       >
         {postcard.pageContent.backgroundImage && (
@@ -50,16 +50,16 @@ const Page = async ({
           </div>
         )}
         <div
-          className={"relative z-10 flex w-full justify-start px-6 sm:px-16"}
+          className={"relative z-10 flex w-full justify-start px-6 md:px-16"}
         >
-          <Link href={"/postcards"} className={"flex gap-1"}>
+          <Link href={"/"} className={"flex gap-1"}>
             <ArrowLeft color={"white"} />
-            <span className={"text-xl font-semibold text-white"}>Back</span>
+            <span className={"text-xl font-normal text-white"}>Back</span>
           </Link>
         </div>
         <div
           className={
-            "relative z-10 grid w-full grid-cols-12 gap-y-2 p-6 sm:p-16 md:gap-y-4"
+            "relative z-10 grid w-full grid-cols-12 gap-y-2 p-6 md:px-16 lg:gap-y-4 lg:p-16"
           }
         >
           <div
@@ -67,26 +67,34 @@ const Page = async ({
               "col-span-12 col-start-1 row-span-1 row-start-1 md:col-span-8 lg:col-span-6"
             }
           >
-            <h3 className={"text-xl font-normal text-white md:text-3xl"}>
+            <h3
+              className={
+                "text-xl font-normal text-white lg:text-2xl xl:text-3xl"
+              }
+            >
               {postcard.pageContent.subtitle}
             </h3>
           </div>
           <div className={"col-span-12 col-start-1 row-span-1 row-start-2"}>
-            <h1 className={"text-5xl font-bold text-white md:text-6xl"}>
+            <h1
+              className={
+                "text-3xl font-bold text-white lg:text-4xl xl:text-6xl"
+              }
+            >
               {postcard.pageContent.title}
             </h1>
           </div>
         </div>
         <div
           className={
-            "relative z-10 mb-16 flex w-full flex-col items-center justify-center gap-12 px-6 sm:px-16 xl:mb-0 xl:flex-row xl:items-start xl:gap-0"
+            "relative z-10 mb-16 flex w-full flex-col items-center justify-center gap-2 px-6 md:gap-12 md:px-16 xl:mb-0 xl:flex-row xl:items-start xl:gap-0"
           }
         >
           <CardContentProvider>
             <FlipCardProvider>
               <div
                 className={
-                  "mb-16 flex w-full flex-col items-center lg:max-w-[1020px] xl:flex-1/3"
+                  "mb-8 flex w-full flex-col items-center md:mb-16 lg:max-w-[1020px] xl:flex-1/3"
                 }
               >
                 <CardComponent
@@ -97,7 +105,7 @@ const Page = async ({
                   withContentProvider={false}
                 />
               </div>
-              <div className={"mb-16 hidden flex-1 xl:block"}>
+              <div className={"w-full flex-1 md:mb-16 md:hidden xl:block"}>
                 <CreatePostcardForm postcardTemplateId={postcard.id} />
               </div>
             </FlipCardProvider>

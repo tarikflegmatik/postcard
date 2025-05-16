@@ -76,7 +76,7 @@ const CardsDrawer = () => {
                     setSelectedLocation(null);
                     setMobileLocationsOpen(false);
                   }}
-                  className="mb-2 w-full max-w-sm rounded-lg border bg-white py-5 text-center text-black md:hidden"
+                  className="mb-2 w-full max-w-sm rounded-lg border bg-white py-5 text-center text-black hover:cursor-pointer md:hidden"
                 >
                   Close
                 </button>

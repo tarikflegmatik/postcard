@@ -15,8 +15,8 @@ const initMap = (container: HTMLDivElement): mapboxgl.Map => {
   return new mapboxgl.Map({
     container,
     style: "mapbox://styles/mapbox/light-v11",
-    center: [16, 45],
-    zoom: 5.5,
+    center: [16.453371, 43.469612],
+    zoom: 9,
     minZoom: 4,
     maxZoom: 12,
     maxBounds: [

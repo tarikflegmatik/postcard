@@ -121,6 +121,12 @@ export const getLocations = async (): Promise<Location[]> => {
   return data.docs as Location[];
 };
 
+export const getCachedLocations = cache(() => {
+  return unstable_cache(async () => getLocations(), [], {
+    tags: [`postcards`],
+  })();
+});
+
 export const getInvitations = async (): Promise<Invitation[]> => {
   const payload = await getPayload({ config });
   const data = await payload.find({

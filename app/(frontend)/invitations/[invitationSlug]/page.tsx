@@ -79,12 +79,12 @@ const Page = async ({
         </div>
         <div
           className={
-            "relative z-10 mb-16 flex w-full flex-col items-center justify-center gap-12 px-6 sm:px-16 xl:mb-0 xl:flex-row xl:items-start xl:gap-0"
+            "relative z-10 mb-8 flex w-full flex-col items-center justify-center gap-12 px-6 sm:mb-16 sm:px-16 xl:mb-0 xl:flex-row xl:items-start xl:gap-0"
           }
         >
           <div
             className={
-              "mb-16 flex w-full flex-col items-center lg:max-w-[1020px] xl:flex-1/3"
+              "flex w-full flex-col items-center sm:mb-16 lg:max-w-[1020px] xl:flex-1/3"
             }
           >
             <CardComponent

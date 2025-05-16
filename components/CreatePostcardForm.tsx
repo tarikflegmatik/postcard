@@ -42,7 +42,7 @@ const CreatePostcardForm = ({
 
   if (state?.data) {
     return (
-      <div className={"flex w-full flex-col gap-6 pl-10"}>
+      <div className={"flex w-full flex-col gap-6 pl-0 xl:pl-10"}>
         <h4 className={"w-full text-xl font-bold text-white"}>
           Share your Postcard
         </h4>

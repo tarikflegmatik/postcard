@@ -22,7 +22,7 @@ const PostcardShareOptions = ({ slug }: { slug: string }) => {
             <div>
               <button
                 className={
-                  "flex w-10 items-center justify-center hover:cursor-pointer"
+                  "flex w-10 items-center justify-center hover:cursor-pointer xl:w-15"
                 }
                 onClick={() => copyUrlToClipboard(url as string)}
               >

@@ -32,7 +32,7 @@ const CardBackBorder = ({
     }
     return (
       <div
-        className="absolute inset-0 z-10 bg-[length:12px_12px] bg-repeat-space md:bg-[length:20px_20px]"
+        className="absolute inset-0 z-10 bg-[length:8px_8px] bg-repeat-space sm:bg-[length:12px_12px] md:bg-[length:20px_20px]"
         style={{
           backgroundImage: `url("${borderPattern.url}")`,
           backgroundPosition: "top left",
@@ -46,7 +46,7 @@ const CardBackBorder = ({
     if (borderPattern) {
       return (
         <div
-          className="absolute inset-0 z-10 bg-[length:12px_12px] bg-repeat-space md:bg-[length:20px_20px]"
+          className="absolute inset-0 z-10 bg-[length:8px_8px] bg-repeat-space sm:bg-[length:12px_12px] md:bg-[length:20px_20px]"
           style={{
             backgroundImage: `url("${borderPattern.url}")`,
             backgroundPosition: "top left",
@@ -114,9 +114,9 @@ const CardBackRightBottom = ({
   }
   if (type === "postcard-created") {
     return (
-      <div className={"flex w-full justify-center xl:hidden"}>
+      <div className={"hidden w-full justify-center md:flex xl:hidden"}>
         <Link
-          href={"/postcards"}
+          href={"/"}
           className={
             "w-full max-w-[150px] border-2 border-white bg-[#BEA568] py-1 text-center text-sm text-white hover:cursor-pointer sm:text-base md:max-w-[220px] md:py-2 md:text-xl lg:max-w-[290px] lg:py-4"
           }
@@ -130,7 +130,7 @@ const CardBackRightBottom = ({
   }
   if (type === "postcard-template")
     return (
-      <div className={"block w-full xl:hidden"}>
+      <div className={"hidden w-full md:block xl:hidden"}>
         <CreatePostcardHandler postcardTemplateId={postcardTemplateId} />
       </div>
     );
@@ -162,17 +162,17 @@ const CardBack = ({
   const content = (
     <div
       className={
-        "relative aspect-[80/45] h-full w-full border bg-white p-3 shadow-xl md:p-5"
+        "relative aspect-[80/45] h-full w-full border bg-white p-2 shadow-xl sm:p-3 md:p-5"
       }
     >
       <CardBackBorder type={type} card={card} />
       <div
         className={
-          "relative z-20 flex h-full w-full divide-x bg-white px-4 py-5 md:py-7"
+          "relative z-20 flex h-full w-full divide-x bg-white px-2 py-3 md:px-4 md:py-5 lg:py-7"
         }
       >
         <div
-          className={`font-kalam flex h-full flex-3/5 flex-col justify-center gap-0.5 text-base sm:gap-1 sm:text-xl md:gap-3 md:text-2xl lg:flex-1 lg:gap-5 lg:text-3xl`}
+          className={`font-kalam flex h-full flex-3/5 flex-col justify-center gap-0.5 text-xs sm:gap-1 sm:text-xl md:gap-3 md:text-2xl lg:flex-1 lg:gap-5 lg:text-3xl`}
         >
           {messageTextCollection.map((textBlock, i) => {
             const isLast = i === messageTextCollection.length - 1;
@@ -212,7 +212,7 @@ const CardBack = ({
             </div>
           </div>
           <div
-            className={`font-kalam flex h-full w-full flex-col items-center justify-center gap-2 text-base sm:text-xl md:text-2xl lg:text-3xl`}
+            className={`font-kalam flex h-full w-full flex-col items-center justify-center gap-2 text-xs sm:text-xl md:text-2xl lg:text-3xl`}
           >
             {signatureTextCollection.map((textBlock, i) => (
               <span
@@ -234,7 +234,7 @@ const CardBack = ({
       </div>
       <FlipCardButton
         className={
-          "absolute -top-3 -right-3 z-30 h-[60px] w-[60px] rounded-full border border-white bg-[#BEA568] text-xs font-semibold break-words text-white hover:cursor-pointer lg:text-sm lg:font-bold"
+          "absolute -top-3 -right-3 z-30 h-[45px] w-[45px] rounded-full border border-white bg-[#BEA568] text-xs font-semibold break-words text-white hover:cursor-pointer sm:h-[60px] sm:w-[60px] lg:text-sm lg:font-bold"
         }
       >
         {lang === "croatian" ? "Okreni" : "Flip"}
