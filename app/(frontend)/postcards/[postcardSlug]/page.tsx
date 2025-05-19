@@ -103,7 +103,7 @@ const Page = async ({
               signature={signature}
             />
           </div>
-          <div className={"w-full flex-1 md:mb-16 md:hidden xl:block"}>
+          <div className={"w-full flex-1 sm:mb-16 sm:hidden xl:block"}>
             <div className={"flex w-full justify-center self-center xl:pl-10"}>
               <Link
                 href={"/"}

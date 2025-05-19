@@ -107,14 +107,14 @@ const CardBackRightBottom = ({
 }) => {
   if (type === "invitation") {
     return (
-      <div className={"flex w-full justify-center xl:hidden"}>
+      <div className={"flex w-full justify-center pl-1 xl:hidden"}>
         <ScrollToSignup />
       </div>
     );
   }
   if (type === "postcard-created") {
     return (
-      <div className={"hidden w-full justify-center md:flex xl:hidden"}>
+      <div className={"hidden w-full justify-center pl-1 sm:flex xl:hidden"}>
         <Link
           href={"/"}
           className={
@@ -130,7 +130,7 @@ const CardBackRightBottom = ({
   }
   if (type === "postcard-template")
     return (
-      <div className={"hidden w-full md:block xl:hidden"}>
+      <div className={"hidden w-full pl-1 sm:block xl:hidden"}>
         <CreatePostcardHandler postcardTemplateId={postcardTemplateId} />
       </div>
     );
