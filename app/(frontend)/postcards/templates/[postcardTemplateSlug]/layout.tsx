@@ -1,8 +1,16 @@
 import React from "react";
 import { Metadata } from "next";
-import { getPostcardTemplate } from "@/lib/data";
+import { getPostcardTemplate, getPostcardTemplates } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { Media } from "@/lib/types/payload-types";
+
+export const generateStaticParams = async () => {
+  const postcardTemplates = await getPostcardTemplates();
+
+  return postcardTemplates.map((postcardTemplate) => ({
+    postcardTemplateSlug: postcardTemplate.slug,
+  }));
+};
 
 export const generateMetadata = async ({
   params,
@@ -16,7 +24,7 @@ export const generateMetadata = async ({
   const title = postcard.metadata?.title || "Yours Digitally";
   const description =
     postcard.metadata?.description ||
-    "Send your personalised postcard. - Yours Digitally";
+    "Receive a digital postcard from Croatia - Yours digitally, Central Dalmatia";
   const imageUrl = (postcard.metadata?.image as Media).url || "";
 
   return {

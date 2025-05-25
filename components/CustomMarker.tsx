@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 
-type Props = { title: string; selected: boolean; onClick: () => void };
+type Props = { title: string; selected: boolean; onClick?: () => void };
 
 const CustomMarker = ({ title, selected, onClick }: Props) => {
   return (

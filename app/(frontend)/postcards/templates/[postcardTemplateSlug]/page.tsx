@@ -1,7 +1,7 @@
 import { RefreshRouteOnSave } from "@/components/RefrechRouteOnSave";
 import { notFound } from "next/navigation";
 import CardComponent from "@/components/card/Card";
-import { getCachedPostcardTemplate, getPostcardTemplates } from "@/lib/data";
+import { getCachedPostcardTemplate } from "@/lib/data";
 import Image from "next/image";
 import { Media } from "@/lib/types/payload-types";
 import OrientationWarning from "@/components/OrientationWarning";
@@ -10,14 +10,6 @@ import { CardContentProvider } from "@/components/providers/CardContentProvider"
 import { FlipCardProvider } from "@/components/providers/FlipCardProvider";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-
-export const generateStaticParams = async () => {
-  const postcardTemplates = await getPostcardTemplates();
-
-  return postcardTemplates.map((postcardTemplate) => ({
-    postcardTemplateSlug: postcardTemplate.slug,
-  }));
-};
 
 const Page = async ({
   params,

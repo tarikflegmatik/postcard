@@ -74,6 +74,8 @@ export interface Config {
     postcards: Postcard;
     invitations: Invitation;
     signedPostcards: SignedPostcard;
+    landmarks: Landmark;
+    landmarkLocations: LandmarkLocation;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -87,6 +89,8 @@ export interface Config {
     postcards: PostcardsSelect<false> | PostcardsSelect<true>;
     invitations: InvitationsSelect<false> | InvitationsSelect<true>;
     signedPostcards: SignedPostcardsSelect<false> | SignedPostcardsSelect<true>;
+    landmarks: LandmarksSelect<false> | LandmarksSelect<true>;
+    landmarkLocations: LandmarkLocationsSelect<false> | LandmarkLocationsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -348,6 +352,52 @@ export interface SignedPostcard {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landmarks".
+ */
+export interface Landmark {
+  id: number;
+  name: string;
+  slug: string;
+  location?: (number | null) | LandmarkLocation;
+  pageContent: {
+    subtitle: string;
+    title: string;
+    backgroundImage?: (number | null) | Media;
+  };
+  postcards?: (number | Postcard)[] | null;
+  /**
+   * Used for SEO and social sharing.
+   */
+  metadata?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    /**
+     * Adds <meta name='robots' content='noindex'>
+     */
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landmarkLocations".
+ */
+export interface LandmarkLocation {
+  id: number;
+  name: string;
+  slug: string;
+  street: string;
+  coords: {
+    latitude: number;
+    longitude: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -380,6 +430,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'signedPostcards';
         value: number | SignedPostcard;
+      } | null)
+    | ({
+        relationTo: 'landmarks';
+        value: number | Landmark;
+      } | null)
+    | ({
+        relationTo: 'landmarkLocations';
+        value: number | LandmarkLocation;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -583,6 +641,50 @@ export interface SignedPostcardsSelect<T extends boolean = true> {
     | {
         opens?: T;
         shares?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landmarks_select".
+ */
+export interface LandmarksSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  location?: T;
+  pageContent?:
+    | T
+    | {
+        subtitle?: T;
+        title?: T;
+        backgroundImage?: T;
+      };
+  postcards?: T;
+  metadata?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landmarkLocations_select".
+ */
+export interface LandmarkLocationsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  street?: T;
+  coords?:
+    | T
+    | {
+        latitude?: T;
+        longitude?: T;
       };
   updatedAt?: T;
   createdAt?: T;

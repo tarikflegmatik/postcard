@@ -1,5 +1,6 @@
 import {
   Invitation,
+  Landmark,
   Location,
   Postcard,
   PostcardsByLocation,
@@ -30,7 +31,7 @@ export const getInvitation = async (
 
 export const getCachedInvitation = cache((slug: Invitation["slug"]) => {
   return unstable_cache(async () => getInvitation(slug), [slug], {
-    tags: ["invitation", `invitation-${slug}`],
+    tags: [`invitation-${slug}`],
   })();
 });
 
@@ -54,7 +55,7 @@ export const getPostcardTemplate = async (
 
 export const getCachedPostcardTemplate = cache((slug: Postcard["slug"]) => {
   return unstable_cache(async () => getPostcardTemplate(slug), [slug], {
-    tags: [`postcard-${slug}`],
+    tags: ["postcards", `postcard-${slug}`],
   })();
 });
 
@@ -81,6 +82,7 @@ export const getPostcardTemplates = async (): Promise<Postcard[]> => {
   const payload = await getPayload({ config });
   const data = await payload.find({
     collection: "postcards" as CollectionSlug,
+    sort: "-createdAt",
     pagination: false,
   });
 
@@ -123,7 +125,7 @@ export const getLocations = async (): Promise<Location[]> => {
 
 export const getCachedLocations = cache(() => {
   return unstable_cache(async () => getLocations(), [], {
-    tags: [`postcards`],
+    tags: ["locations"],
   })();
 });
 
@@ -135,4 +137,43 @@ export const getInvitations = async (): Promise<Invitation[]> => {
   });
 
   return data.docs as Invitation[];
+};
+
+export const getLandmark = async (
+  slug: Landmark["slug"],
+): Promise<Landmark | null> => {
+  const payload = await getPayload({ config });
+  const data = await payload.find({
+    collection: "landmarks" as CollectionSlug,
+    where: {
+      slug: { equals: slug },
+    },
+    limit: 1,
+  });
+
+  if (data.docs.length === 0) return null;
+
+  const [landmark] = data.docs;
+  return landmark as Landmark;
+};
+
+export const getCachedLandmark = cache(async (slug: Landmark["slug"]) => {
+  const landmark = await getLandmark(slug);
+  const postcards = landmark?.postcards as Postcard[];
+  const postcardRevalidateTags = postcards.map(
+    (postcard) => `postcard-${postcard.slug}`,
+  );
+  return unstable_cache(async () => getLandmark(slug), [slug], {
+    tags: [`landmark-${slug}`, ...postcardRevalidateTags],
+  })();
+});
+
+export const getLandmarks = async (): Promise<Landmark[]> => {
+  const payload = await getPayload({ config });
+  const data = await payload.find({
+    collection: "landmarks" as CollectionSlug,
+    pagination: false,
+  });
+
+  return data.docs as Landmark[];
 };

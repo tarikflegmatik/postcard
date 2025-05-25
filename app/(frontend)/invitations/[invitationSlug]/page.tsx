@@ -2,18 +2,10 @@ import Image from "next/image";
 import { RefreshRouteOnSave } from "@/components/RefrechRouteOnSave";
 import { notFound } from "next/navigation";
 import CardComponent from "@/components/card/Card";
-import { getCachedInvitation, getInvitations } from "@/lib/data";
+import { getCachedInvitation } from "@/lib/data";
 import RegisterForm from "@/components/RegisterForm";
 import OrientationWarning from "@/components/OrientationWarning";
 import { Media } from "@/lib/types/payload-types";
-
-export const generateStaticParams = async () => {
-  const invitations = await getInvitations();
-
-  return invitations.map((invitation) => ({
-    invitationSlug: invitation.slug,
-  }));
-};
 
 const Page = async ({
   params,

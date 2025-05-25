@@ -15,6 +15,8 @@ import { Postcards } from "./collections/Postcards";
 import { s3Storage } from "@payloadcms/storage-s3";
 import { Invitations } from "./collections/Invitations";
 import { SignedPostcards } from "@/collections/SignedPostcards";
+import { Landmarks } from "@/collections/Landmarks";
+import { LandmarkLocations } from "@/collections/LandmarkLocations";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -34,6 +36,8 @@ export default buildConfig({
     Postcards,
     Invitations,
     SignedPostcards,
+    Landmarks,
+    LandmarkLocations,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",

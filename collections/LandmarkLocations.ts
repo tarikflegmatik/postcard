@@ -1,14 +1,13 @@
 import type { CollectionConfig } from "payload";
-import { revalidateTag } from "next/cache";
 
 // 'name': A human-readable label for editors and users
 // 'slug': A URL-friendly, unique identifier that exists in case it is ever required in frontend filter purposes
 
-export const Locations: CollectionConfig = {
-  slug: "locations",
+export const LandmarkLocations: CollectionConfig = {
+  slug: "landmarkLocations",
   labels: {
-    singular: "Location",
-    plural: "Locations",
+    singular: "Landmark Location",
+    plural: "Landmark Locations",
   },
   admin: {
     useAsTitle: "name",
@@ -23,6 +22,11 @@ export const Locations: CollectionConfig = {
       name: "slug",
       type: "text",
       unique: true,
+      required: true,
+    },
+    {
+      name: "street",
+      type: "text",
       required: true,
     },
     {
@@ -42,16 +46,4 @@ export const Locations: CollectionConfig = {
       ],
     },
   ],
-  hooks: {
-    afterChange: [
-      async () => {
-        revalidateTag("locations");
-      },
-    ],
-    afterDelete: [
-      async () => {
-        revalidateTag("locations");
-      },
-    ],
-  },
 };
