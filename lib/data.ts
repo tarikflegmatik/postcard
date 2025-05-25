@@ -91,7 +91,7 @@ export const getPostcardTemplates = async (): Promise<Postcard[]> => {
 
 export const getCachedPostcardTemplates = cache(() => {
   return unstable_cache(async () => getPostcardTemplates(), [], {
-    tags: [`postcards`],
+    tags: ["postcards"],
   })();
 });
 
@@ -158,13 +158,8 @@ export const getLandmark = async (
 };
 
 export const getCachedLandmark = cache(async (slug: Landmark["slug"]) => {
-  const landmark = await getLandmark(slug);
-  const postcards = landmark?.postcards as Postcard[];
-  const postcardRevalidateTags = postcards.map(
-    (postcard) => `postcard-${postcard.slug}`,
-  );
   return unstable_cache(async () => getLandmark(slug), [slug], {
-    tags: [`landmark-${slug}`, ...postcardRevalidateTags],
+    tags: [`landmark-${slug}`, "postcards"],
   })();
 });
 
