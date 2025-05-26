@@ -67,6 +67,7 @@ export const useCarousel = (
       if (items[activeIndex]) {
         (items[activeIndex] as HTMLElement).scrollIntoView({
           behavior: "smooth",
+          block: "nearest",
           inline: "center",
         });
       }
