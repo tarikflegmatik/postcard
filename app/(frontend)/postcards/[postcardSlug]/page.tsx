@@ -9,6 +9,7 @@ import OrientationWarning from "@/components/OrientationWarning";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import React from "react";
+import SponsorLogos from "@/components/SponsorLogos";
 
 const Page = async ({
   params,
@@ -102,6 +103,7 @@ const Page = async ({
               card={postcardTemplate}
               signature={signature}
             />
+            <SponsorLogos />
           </div>
           <div className={"w-full flex-1 sm:mb-16 sm:hidden xl:block"}>
             <div className={"flex w-full justify-center self-center xl:pl-10"}>

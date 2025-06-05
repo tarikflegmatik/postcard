@@ -10,6 +10,7 @@ import { CardContentProvider } from "@/components/providers/CardContentProvider"
 import { FlipCardProvider } from "@/components/providers/FlipCardProvider";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import SponsorLogos from "@/components/SponsorLogos";
 
 const Page = async ({
   params,
@@ -96,6 +97,7 @@ const Page = async ({
                   withFlipProvider={false}
                   withContentProvider={false}
                 />
+                <SponsorLogos />
               </div>
               <div className={"w-full flex-1 sm:mb-16 sm:hidden xl:block"}>
                 <CreatePostcardForm postcardTemplateId={postcard.id} />
