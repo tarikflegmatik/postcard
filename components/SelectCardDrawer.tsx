@@ -66,7 +66,6 @@ const CardsDrawer = () => {
               <div className="mt-8 flex flex-col items-center gap-2 md:mt-5">
                 <Link
                   href={`/postcards/templates/${filteredPostcards[activeIndex]?.slug}`}
-                  target="_blank"
                   className="w-full max-w-sm rounded-lg border-2 border-[#007092] bg-[#007092] py-5 text-center text-white shadow-md hover:bg-[#007092]/80"
                 >
                   Create your Postcard

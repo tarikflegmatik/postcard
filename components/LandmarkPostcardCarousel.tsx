@@ -31,7 +31,6 @@ const LandmarkPostcardCarousel = ({ postcards }: { postcards: Postcard[] }) => {
         <div className="mt-2 flex flex-col items-center md:mt-1">
           <Link
             href={`/postcards/templates/${postcards[activeIndex]?.slug}`}
-            target="_blank"
             className="w-full max-w-sm rounded-lg border-2 border-[#007092] bg-[#007092] py-5 text-center text-white shadow-md hover:bg-[#007092]/80"
           >
             Create your Postcard

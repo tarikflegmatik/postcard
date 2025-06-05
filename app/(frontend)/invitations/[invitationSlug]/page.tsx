@@ -6,6 +6,7 @@ import { getCachedInvitation } from "@/lib/data";
 import RegisterForm from "@/components/RegisterForm";
 import OrientationWarning from "@/components/OrientationWarning";
 import { Media } from "@/lib/types/payload-types";
+import SponsorLogos from "@/components/SponsorLogos";
 
 const Page = async ({
   params,
@@ -83,7 +84,7 @@ const Page = async ({
               lang={"croatian"}
               card={invitation}
             />
-            {/*<SponsorLogos />*/}
+            <SponsorLogos />
           </div>
           <div className={"mb-16 w-full lg:max-w-[1020px] xl:flex-1"}>
             <RegisterForm invitationId={invitation.id} />

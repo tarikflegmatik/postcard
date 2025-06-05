@@ -181,7 +181,6 @@ const CardsDrawer = () => {
               <div className="flex w-full flex-col items-center justify-center gap-2 md:mt-5">
                 <Link
                   href={`/postcards/templates/${filteredPostcards[selectedPreviewIndex].slug}`}
-                  target={"_blank"}
                   className="w-full max-w-sm rounded-lg border bg-black py-5 text-center text-white shadow-md transition-colors hover:bg-white hover:text-black"
                 >
                   Create your Postcard
