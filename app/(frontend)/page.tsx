@@ -5,14 +5,22 @@ import Map from "@/components/Map";
 import SelectCardDrawer from "@/components/SelectCardDrawer";
 
 const Page = async () => {
-  const [locations, postcards] = await Promise.all([
+  const [locationsRaw, postcardsByLocation] = await Promise.all([
     getCachedLocations(),
     getPostcardTemplatesByLocation(),
   ]);
 
+  // Filter only locations that got some postcards assigned
+  const locations = locationsRaw.filter(
+    (location) => postcardsByLocation[location.id.toString()],
+  );
+
   return (
     <div className="flex h-screen w-screen items-start overflow-visible">
-      <SelectionProvider locations={locations} postcardsByLocation={postcards}>
+      <SelectionProvider
+        locations={locations}
+        postcardsByLocation={postcardsByLocation}
+      >
         <LocationSidebar />
         <div className={"relative h-full flex-1"}>
           <Map />

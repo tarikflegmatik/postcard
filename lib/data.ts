@@ -100,6 +100,7 @@ export const getPostcardTemplatesByLocation =
     const postcards = await getCachedPostcardTemplates();
 
     return postcards.reduce((grouped, postcard) => {
+      if (postcard.isHiddenOnMap) return grouped;
       const location = postcard.location as Location;
       if (location.id in grouped) {
         grouped[location.id].postcards.push(postcard);

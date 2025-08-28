@@ -24,6 +24,8 @@ const Page = async ({
   const postcardTemplate = postcard.template as Postcard;
   const signature = postcard.signature;
 
+  const isSpecialEventPostcard = postcardTemplate.isSpecialEventPostcard;
+
   return (
     <>
       <RefreshRouteOnSave />
@@ -103,7 +105,7 @@ const Page = async ({
               card={postcardTemplate}
               signature={signature}
             />
-            <SponsorLogos />
+            <SponsorLogos isEventSpecialLogos={isSpecialEventPostcard} />
           </div>
           <div className={"w-full flex-1 sm:mb-16 sm:hidden xl:block"}>
             <div className={"flex w-full justify-center self-center xl:pl-10"}>

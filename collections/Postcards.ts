@@ -34,6 +34,20 @@ export const Postcards: CollectionConfig = {
       required: true,
     },
     {
+      name: "isSpecialEventPostcard",
+      type: "checkbox",
+      label: "Is Special Event Postcard (Custom event Sponsor logos)",
+      defaultValue: false,
+      required: true,
+    },
+    {
+      name: "isHiddenOnMap",
+      type: "checkbox",
+      label: "Is Hidden on Map (Custom Event Postcard)",
+      defaultValue: false,
+      required: true,
+    },
+    {
       name: "pageContent",
       type: "group",
       fields: [
@@ -139,6 +153,7 @@ export const Postcards: CollectionConfig = {
     afterDelete: [
       async ({ doc }) => {
         revalidateTag(`postcard-${doc.slug}`);
+        revalidateTag("postcards");
       },
     ],
   },

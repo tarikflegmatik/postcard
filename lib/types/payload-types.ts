@@ -198,6 +198,8 @@ export interface Postcard {
   name: string;
   slug: string;
   location: number | Location;
+  isSpecialEventPostcard: boolean;
+  isHiddenOnMap: boolean;
   pageContent: {
     subtitle: string;
     title: string;
@@ -548,6 +550,8 @@ export interface PostcardsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   location?: T;
+  isSpecialEventPostcard?: T;
+  isHiddenOnMap?: T;
   pageContent?:
     | T
     | {

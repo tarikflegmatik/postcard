@@ -22,6 +22,8 @@ const Page = async ({
   const postcard = await getCachedPostcardTemplate(postcardTemplateSlug);
   if (!postcard) return notFound();
 
+  const isSpecialEventPostcard = postcard.isSpecialEventPostcard;
+
   return (
     <>
       <RefreshRouteOnSave />
@@ -97,7 +99,7 @@ const Page = async ({
                   withFlipProvider={false}
                   withContentProvider={false}
                 />
-                <SponsorLogos />
+                <SponsorLogos isEventSpecialLogos={isSpecialEventPostcard} />
               </div>
               <div className={"w-full flex-1 sm:mb-16 sm:hidden xl:block"}>
                 <CreatePostcardForm postcardTemplateId={postcard.id} />
