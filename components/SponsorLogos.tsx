@@ -3,22 +3,28 @@ import Image from "next/image";
 
 import EtsLogo from "@/public/ets.webp";
 import TusLogo from "@/public/tus.webp";
-import UnistLogo from "@/public/sveuciliste-u-splitu-logo.webp";
-import HajdukLogo from "@/public/hajduk-logo.webp";
-import DalmatiaLogo from "@/public/logo-new.png";
-import SdzLogo from "@/public/logo-sdz-new.png";
+// import UnistLogo from "@/public/sveuciliste-u-splitu-logo.webp";
+// import HajdukLogo from "@/public/hajduk-logo.webp";
+// import DalmatiaLogo from "@/public/logo-new.png";
+// import SdzLogo from "@/public/logo-sdz-new.png";
 import GovLogo from "@/public/mint-logo.png";
-import MestrovicLogo from "@/public/tmestrovic.webp";
+// import MestrovicLogo from "@/public/tmestrovic.webp";
+import CoatOfArmsOfSplitLogo from "@/public/coat-of-arms-of-split.png";
+import TuristickaZajednicaSplitLogo from "@/public/turisticka-zajednica-split.png";
+import HNKLogo from "@/public/hnk.png";
 
 const logos = [
   { src: TusLogo, alt: "TusLogo" },
   { src: EtsLogo, alt: "EtsLogo" },
-  { src: UnistLogo, alt: "UnistLogo" },
-  { src: HajdukLogo, alt: "HajdukLogo" },
-  { src: DalmatiaLogo, alt: "DalmatiaLogo" },
-  { src: SdzLogo, alt: "SdzLogo" },
-  { src: MestrovicLogo, alt: "MestrovicLogo" },
+  // { src: UnistLogo, alt: "UnistLogo" },
+  // { src: HajdukLogo, alt: "HajdukLogo" },
+  // { src: DalmatiaLogo, alt: "DalmatiaLogo" },
+  // { src: SdzLogo, alt: "SdzLogo" },
+  // { src: MestrovicLogo, alt: "MestrovicLogo" },
   { src: GovLogo, alt: "GovLogo" },
+  { src: CoatOfArmsOfSplitLogo, alt: "CoatOfArmsOfSplitLogo" },
+  { src: TuristickaZajednicaSplitLogo, alt: "TuristickaZajednicaSplitLogo" },
+  { src: HNKLogo, alt: "HNKLogo" },
 ];
 
 const containerVariants = {
@@ -55,7 +61,7 @@ const SponsorLogos = () => {
         <motion.div
           key={index}
           variants={itemVariants}
-          className={"h-9 w-auto"}
+          className={"h-10 w-auto"}
         >
           <Image
             className="h-full w-auto object-contain"
